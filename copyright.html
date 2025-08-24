@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>程式碼複製表格 (手動擴充)</title>
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <style>
+
+        @font-face {
+        font-family: 'FTT-Chiaro B';
+        src: url('../others/FTT-Chiaro B.woff') format("woff"),
+             url('../others/FTT-Chiaro B.ttf') format("truetype"),
+             url('../others/FTT-Chiaro B.eot') format("embedded-opentype");
+}
+
+        /* 媒體查詢：當螢幕寬度小於等於768px時生效 */
+        @media (max-width: 768px) {
+            .code-table-container {
+                width: 100%; /* 表格寬度變為100% */
+                padding: 0 10px; /* 增加左右間距 */
+            }
+        }  
+
+        header {
+            background-image: url("../others/gd181443_-81.jpg");
+            background-size: cover; /* 讓圖片覆蓋整個容器 */
+            background-position: center; /* 讓圖片置中 */
+            background-repeat: no-repeat; /* 圖片不重複 */
+            text-align: left;
+            
+        }
+
+        header i {
+            text-align: left; /* 將文字靠左對齊 */
+            padding-left: 27px; /* 向左側增加 3% 的內間距，將文字往右推 */
+            padding-top: 70px;
+        }
+
+        header span {
+        display: block; /* 讓 span 成為區塊元素 */
+        font-size: 14px;
+        color: #21010cd7;
+        text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                    0.9px -0.9px 0 #f6e6e1bd,
+                    -0.9px 0.9px 0 #f6e6e1bd,
+                    0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        
+    }
+
+         a {
+            font-size: 14px;
+            color: #dd0000f7; /* 使用新的超連結顏色變數 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+		    background: linear-gradient(to bottom, #e6195d 0%, #c8197c 4%, #7a1557 19%, #f05387,#d460a7,#cecece), url("../others/gd181443_-8.jpg"), rgba(165, 164, 164, 0.8);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* 背景圖片在捲動時固定 */
+            background-blend-mode: multiply; /* 混合模式 */
+            color: #281c1c;/* 全体の文字色 */
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            text-align: center;
+		    /* 新增文字陰影 */
+		    text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+              0.9px -0.9px 0 #f6e6e1bd,
+              -0.9px 0.9px 0 #f6e6e1bd,
+              0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        h1 {
+            color: #54011dd7;
+            text-align: center;
+        }
+
+        h1#main-title {
+            position: relative;
+            color: transparent;
+            text-shadow: none;
+            background-image: linear-gradient(to bottom right, #e76eaa 13%, #ca508d 35%, #54011dd7 85%); /* 從左上到右下的漸層 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-align: center;
+
+            filter: drop-shadow(-0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(-0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(1.3px 1.3px 2.4px #928181);
+        }
+
+         h1#main-title::after {
+            content: attr(data-text); /* 使用 data-text 屬性內容 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1; /* 確保陰影在文字下方 */
+            /* 套用您提供的陰影格式 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                0.9px -0.9px 0 #f6e6e1bd,
+                -0.9px 0.9px 0 #f6e6e1bd,
+                0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        .code-input {
+            width: calc(100% - 70px);
+            padding: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fafafa;
+        }
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 6px 12px;
+            background-color: #dd0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .copy-btn:hover {
+            background-color: #a00000;
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+        .tooltip-message {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+
+        .centered-text-container {
+            /* 設定一個最大寬度，讓內容不會太寬 */
+            max-width: 600px; /* 您可以根據需求調整此數值 */
+            /* 使用 auto margin 實現水平置中 */
+            margin-left: auto;
+            margin-right: auto;
+            /* 將內部文字設為靠左對齊 */
+            text-align: left;
+        }
+
+
+                /* 新增的 CSS 樣式：用來繪製斜線 */
+        .diagonal-cell {
+            background: 
+                /* 繪製一條從左下到右上角的斜線 */
+                linear-gradient(to top right, transparent 49.5%, #ccc 49.5%, #ccc 50.5%, transparent 50.5%);
+        }
+
+
+        /* 新增的「返回頂部」按鈕樣式 */
+        #back-to-top {
+            position: fixed; /* 固定在視窗上 */
+            bottom: 20px;    /* 距離底部 20px */
+            right: 20px;     /* 距離右側 20px */
+            cursor: pointer; /* 顯示滑鼠手勢 */
+            z-index: 1000;   /* 確保在其他元素之上 */
+            opacity: 0;      /* 初始狀態為隱藏 */
+            transition: opacity 0.3s, visibility 0.3s; /* 平滑過渡效果 */
+            visibility: hidden; /* 初始狀態為不可見 */
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top img {
+            width: 80px;      /* 調整圖片寬度 */
+            height: auto;     /* 高度自動調整 */
+            /* 增加暈影效果 */
+            box-shadow: 0px 0px 0px rgba(0,0,0,0);
+            /* 設定動畫 */
+            animation: floatUpDown 1.5s ease-in-out infinite alternate;
+        }
+
+        /* 定義上下移動的動畫 */
+        @keyframes floatUpDown {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px); /* 向上移動 10px */
+            }
+        }
+
+        .pagination-select {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001; /* 確保選單在最上層 */
+            display: none;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .pagination-select option {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .pagination-select option:hover {
+            background-color: #f0f0f0;
+        }
+
+        footer {
+            color: #21010cd7;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to top, transparent, #9f1313f7), url("../others/124435362_p01.png");
+            background-color: #9f1313f7; /* 作為 fallback 色，以防漸層未正常顯示 */
+            background-size: cover; /* 讓圖片覆蓋整個容器 */
+            background-position: center; /* 讓圖片置中 */
+            background-repeat: no-repeat; /* 圖片不重複 */
+            background-blend-mode: multiply; /* 混合模式 */
+            text-align: center;
+            position: relative; /* 關鍵修正：讓偽元素可以相對定位 */
+            
+        }
+
+        footer a {
+            font-size: 14px;
+            color: #21010cd7; /* 使用新的超連結顏色變數 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+
+    </style>
+</head>
+
+<div id="back-to-top" title="返回頂部">
+    <img src="../others/pagetop.png" alt="返回頂部" />
+</div>
+
+<body>
+
+    <header>
+        <p><b><br></b></p>
+        <p><b><br></b></p>
+        <h1 id="main-title">免責聲明</h1><br>
+        <div class="centered-text-container">
+            <span>　　　　本站為線上遊戲《鍊金術物語》之非官方攻略網站。站中大部分素材取用自<br>　　官方（© ASOBIMO, Inc. & Quantum Games Inc.），由版權方保有完整著作權。</span><br>
+            <span>　　　　本站之建設目的為與同好交流，僅於合理範圍內供同好學習使用。轉載本站<br>　　連結前，請先聯絡網站架設者。</span><br>
+            <span>　　　　使用本站時可能產生之任何風險，及因違背本站理念暨規定而產生的損害，<br>　　本站概不負責。</span><br><br><br>
+            <span>　　Author：煙草｜未燃燒完全。（Incomplete Combustion.）</span><br><br><br> <br>
+        </div>
+    
+    </header>
+
+    <br><br><br><br><br><br><br><br><br><br>
+    <footer>
+        <br>
+        <h4>copyright © 2025 Incomplete Combustion.</h4>
+        <span><a href="https://forms.gle/mJtxFZm2aotvbMHV6">聯絡我</a>｜免責聲明</span><br><br>
+    </footer>
+
+</body>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 這個腳本只負責複製功能和氣泡框顯示，不處理動態新增行/列
+        
+        function addCopyButtonListener(button) {
+            button.addEventListener('click', function() {
+                const codeInput = button.previousElementSibling;
+                const textToCopy = codeInput.value;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = '已複製！';
+                    tooltip.classList.add('tooltip-message');
+                    
+                    // 移除已存在的氣泡框，避免重複
+                    const existingTooltip = button.parentElement.querySelector('.tooltip-message');
+                    if (existingTooltip) {
+                        existingTooltip.remove();
+                    }
+                    
+                    button.parentElement.appendChild(tooltip);
+
+                    setTimeout(() => {
+                        tooltip.style.opacity = '1';
+                    }, 10);
+
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                        setTimeout(() => {
+                            tooltip.remove();
+                        }, 500);
+                    }, 1500);
+                }).catch(err => {
+                    console.error('複製失敗: ', err);
+                });
+            });
+        }
+
+        // 為所有複製按鈕添加事件監聽器
+        document.querySelectorAll('.copy-btn').forEach(addCopyButtonListener);
+    });
+
+    // ------------------- 搜尋與分頁功能 (新增功能) -------------------
+    
+    const table = document.getElementById('myTable');
+    const tableBody = table.querySelector('tbody');
+    const allRows = Array.from(tableBody.querySelectorAll('tr')); // 取得所有資料列並轉為陣列
+    const searchInput = document.getElementById('searchInput');
+    const paginationTop = document.getElementById('pagination-top');
+    const paginationBottom = document.getElementById('pagination-bottom');
+    
+    const rowsPerPage = 25; // 每頁最多顯示 50 筆
+    let currentPage = 1; // 當前頁面，預設為第一頁
+
+    /**
+     * 主功能函數：根據搜尋關鍵字和當前頁碼來更新表格的顯示內容
+     */
+    function updateTable() {
+        const filterText = searchInput.value.toLowerCase().trim();
+        // 用空格分隔多個關鍵字
+        const filterKeywords = filterText.split(' ').filter(k => k);
+
+        // 1. 篩選出符合搜尋條件的資料列
+        const filteredRows = allRows.filter(row => {
+            const nameCell = row.cells[2]; // '名稱' 是第三個儲存格 (索引為 2)
+            if (!nameCell) return false;
+            
+            const cellText = nameCell.textContent.toLowerCase();
+            // 檢查是否包含所有關鍵字
+            return filterKeywords.every(keyword => cellText.includes(keyword));
+        });
+
+        // 2. 根據篩選結果更新分頁按鈕
+        setupPagination(filteredRows.length);
+
+        // 3. 顯示對應頁面的資料
+        displayPage(filteredRows);
+    }
+
+    /**
+     * 顯示特定頁面的資料列
+     * @param {Array} rowsToShow - 經過篩選後的所有可見資料列
+     */
+    function displayPage(rowsToShow) {
+        // 先隱藏所有原始資料列
+        allRows.forEach(row => row.style.display = 'none');
+
+        // 計算當前頁面應該顯示的資料範圍
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageRows = rowsToShow.slice(startIndex, endIndex);
+        
+        // 只顯示當前頁面的資料列
+        pageRows.forEach(row => row.style.display = ''); // '' 會恢復預設的 display 樣式 (table-row)
+    }
+
+    /**
+     * 建立或更新分頁按鈕
+     * @param {number} totalRows - 篩選後的總資料筆數
+     */
+    function setupPagination(totalRows) {
+        // 清空現有的分頁按鈕
+        paginationTop.innerHTML = '';
+        paginationBottom.innerHTML = '';
+
+        if (totalRows <= rowsPerPage) return; // 如果總筆數不足一頁，則不顯示分頁
+
+        const pageCount = Math.ceil(totalRows / rowsPerPage);
+
+        // 建立按鈕的通用函數
+        function createPaginationButtons(container, shouldScroll) {
+            const fragment = document.createDocumentFragment();
+
+            // 新增 "上一頁" 按鈕
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '上一頁';
+            prevButton.className = 'pagination-btn';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                }
+            });
+            fragment.appendChild(prevButton);
+
+            // 動態生成頁碼按鈕
+            const maxVisiblePages = 5;
+            let startPage, endPage;
+
+            // 總頁數 <= 7 時，顯示所有頁碼
+            if (pageCount <= 7) {
+                startPage = 1;
+                endPage = pageCount;
+            } else {
+                // 處理左側邊界
+                if (currentPage <= 4) {
+                    startPage = 1;
+                    endPage = 5;
+                }
+                // 處理右側邊界
+                else if (currentPage > pageCount - 4) {
+                    startPage = pageCount - 4;
+                    endPage = pageCount;
+                }
+                // 處理中間區域
+                else {
+                    startPage = currentPage - 1;
+                    endPage = currentPage + 1;
+                }
+            }
+
+            // 處理左側的「...」
+            if (startPage > 1) {
+                const firstPageBtn = document.createElement('button');
+                firstPageBtn.textContent = '1';
+                firstPageBtn.className = 'pagination-btn';
+                firstPageBtn.addEventListener('click', () => {
+                    currentPage = 1;
+                    updateTable();
+                    if (shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(firstPageBtn);
+
+                if (startPage > 2) {
+                    createEllipsis(fragment, 2, startPage - 1, shouldScroll);
+                }
+            }
+            
+            // 顯示主要頁碼按鈕
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = 'pagination-btn';
+                if (i === currentPage) {
+                    btn.classList.add('active'); // 標示當前頁面
+                }
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(btn);
+            }
+
+            // 處理右側的「...」
+            if (endPage < pageCount) {
+                if (endPage < pageCount - 1) {
+                    createEllipsis(fragment, endPage + 1, pageCount - 1, shouldScroll);
+                }
+                const lastPageBtn = document.createElement('button');
+                lastPageBtn.textContent = pageCount;
+                lastPageBtn.className = 'pagination-btn';
+                lastPageBtn.addEventListener('click', () => {
+                    currentPage = pageCount;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(lastPageBtn);
+            }
+
+            // 創建下拉選單的「...」按鈕
+            function createEllipsis(parent, start, end, shouldScroll) {
+                const ellipsisBtn = document.createElement('button');
+                ellipsisBtn.textContent = '...';
+                ellipsisBtn.className = 'pagination-btn';
+                ellipsisBtn.style.position = 'relative'; 
+                
+                const select = document.createElement('select');
+                select.style.display = 'none'; 
+                select.style.position = 'absolute';
+                select.style.bottom = '100%';
+                select.style.left = '50%';
+                select.style.transform = 'translateX(-50%)';
+                select.style.zIndex = '10';
+                select.style.width = 'auto'; 
+                select.style.minWidth = '80px'; 
+                select.style.backgroundColor = '#fff';
+                select.style.border = '1px solid #ddd';
+                select.style.borderRadius = '4px';
+                select.style.padding = '5px';
+                select.style.marginTop = '5px';
+
+
+                // 填充下拉選單選項
+                for (let i = start; i <= end; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    select.appendChild(option);
+                }
+                
+                select.addEventListener('change', (e) => {
+                    currentPage = parseInt(e.target.value);
+                    updateTable();
+                    if (shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                    select.style.display = 'none'; 
+                });
+
+                ellipsisBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 防止點擊「...」時觸發父容器的事件
+                    select.style.display = (select.style.display === 'block') ? 'none' : 'block';
+                });
+
+                // **關鍵修正：將 select 元素附加到 button 內部**
+                ellipsisBtn.appendChild(select);
+                parent.appendChild(ellipsisBtn);
+            }
+            
+            // 新增 "下一頁" 按鈕
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '下一頁';
+            nextButton.className = 'pagination-btn';
+            nextButton.disabled = currentPage === pageCount;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                }
+            });
+            fragment.appendChild(nextButton);
+
+            container.appendChild(fragment);
+        }
+
+        // 建立上方分頁，不滾動
+        createPaginationButtons(paginationTop, false);
+        // 建立下方分頁，點擊後滾動
+        createPaginationButtons(paginationBottom, true);
+    }
+    
+
+    // ------------------- 事件監聽與初始化 -------------------
+
+     // 新增的「返回頂部」功能
+    const backToTopBtn = document.getElementById('back-to-top');
+    const header = document.querySelector('header'); // 假設您的 header 有 id 或 class
+    
+    // 監聽視窗捲動事件
+    window.addEventListener('scroll', () => {
+        // 如果 header 元素存在，檢查其位置
+        if (header) {
+            const headerRect = header.getBoundingClientRect();
+            if (headerRect.bottom <= 0) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+    });
+
+    // 監聽按鈕點擊事件，點擊後平滑捲動回頁面頂部
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 平滑捲動
+        });
+    });
+
+    // 監聽搜尋欄位的輸入事件
+    searchInput.addEventListener('keyup', () => {
+        currentPage = 1; // 每次搜尋時都回到第一頁
+        updateTable();
+    });
+
+    // 取得新按鈕的元素
+    const searchImageButton = document.getElementById('search-image-btn');
+
+    // 監聽新按鈕的點擊事件
+    searchImageButton.addEventListener('click', () => {
+        currentPage = 1; // 每次搜尋時都回到第一頁
+        updateTable();
+    });
+
+    // 頁面初次載入時，執行一次更新來顯示第一頁
+    updateTable();
+
+</script>
+</body>
+</html>

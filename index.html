@@ -1,0 +1,3984 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>程式碼複製表格 (手動擴充)</title>
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <style>
+
+        @font-face {
+        font-family: 'FTT-Chiaro B';
+        src: url('../others/FTT-Chiaro B.woff') format("woff"),
+             url('../others/FTT-Chiaro B.ttf') format("truetype"),
+             url('../others/FTT-Chiaro B.eot') format("embedded-opentype");
+}
+
+        /* 媒體查詢：當螢幕寬度小於等於768px時生效 */
+        @media (max-width: 768px) {
+            .code-table-container {
+                width: 100%; /* 表格寬度變為100% */
+                padding: 0 10px; /* 增加左右間距 */
+            }
+        }  
+
+        header {
+            background-image: url("../others/gd181443_-81.jpg");
+            background-size: cover; /* 讓圖片覆蓋整個容器 */
+            background-position: center; /* 讓圖片置中 */
+            background-repeat: no-repeat; /* 圖片不重複 */
+            text-align: left;
+            
+        }
+
+        header i {
+            text-align: left; /* 將文字靠左對齊 */
+            padding-left: 27px; /* 向左側增加 3% 的內間距，將文字往右推 */
+            padding-top: 70px;
+        }
+
+        header span {
+            text-align: left; /* 將文字靠左對齊 */
+            font-size: 14px;
+            color: #21010cd7;
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+         a {
+            font-size: 14px;
+            color: #dd0000f7; /* 使用新的超連結顏色變數 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+		    background: linear-gradient(to bottom, #e6195d 0%, #c8197c 4%, #7a1557 19%, #f05387,#d460a7,#cecece), url("../others/gd181443_-8.jpg"), rgba(165, 164, 164, 0.8);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* 背景圖片在捲動時固定 */
+            background-blend-mode: multiply; /* 混合模式 */
+            color: #281c1c;/* 全体の文字色 */
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            text-align: center;
+		    /* 新增文字陰影 */
+		    text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+              0.9px -0.9px 0 #f6e6e1bd,
+              -0.9px 0.9px 0 #f6e6e1bd,
+              0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        h1 {
+            color: #54011dd7;
+            text-align: center;
+        }
+
+        h1#main-title {
+            position: relative;
+            color: transparent;
+            text-shadow: none;
+            background-image: linear-gradient(to bottom right, #e76eaa 13%, #ca508d 35%, #54011dd7 85%); /* 從左上到右下的漸層 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-align: right;
+            margin-right: 5%;
+
+            filter: drop-shadow(-0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(-0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(1.3px 1.3px 2.4px #928181);
+        }
+
+         h1#main-title::after {
+            content: attr(data-text); /* 使用 data-text 屬性內容 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1; /* 確保陰影在文字下方 */
+            /* 套用您提供的陰影格式 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                0.9px -0.9px 0 #f6e6e1bd,
+                -0.9px 0.9px 0 #f6e6e1bd,
+                0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        table {
+            width: 67.67%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: #fff;
+            /* 關鍵修正：為表格設定圓角與隱藏溢出 */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        /* 表格第一列和第二列的標題與內容底色為粉紅色 */
+        th:nth-child(1), th:nth-child(3){
+            background-color: #ebd0d5; /* 柔和的粉紅色 */
+            color: #7c565d;
+        }
+
+        td:nth-child(1), td:nth-child(3) {
+            background-color: #fde4f0; /* 柔和的粉紅色 */
+        }
+
+        .code-input {
+            width: calc(100% - 70px);
+            padding: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fafafa;
+        }
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 6px 12px;
+            background-color: #dd0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .copy-btn:hover {
+            background-color: #a00000;
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+        .tooltip-message {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+                /* 新增的 CSS 樣式：用來繪製斜線 */
+        .diagonal-cell {
+            background: 
+                /* 繪製一條從左下到右上角的斜線 */
+                linear-gradient(to top right, transparent 49.5%, #ccc 49.5%, #ccc 50.5%, transparent 50.5%);
+        }
+
+        /* 以下為新增的樣式 */
+        /* 搜尋欄位的樣式 */
+        #searchInput {
+            width: 50%;
+            padding: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+        }
+
+        /* 分頁按鈕容器的樣式 */
+        .pagination-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* 讓按鈕在小螢幕上可以換行 */
+        }
+
+        /* 分頁按鈕的樣式 */
+        .pagination-btn {
+            background-color: #f2f2f2;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            margin: 2px;
+            cursor: pointer;
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            transition: background-color 0.3s;
+            border-radius: 7.5px;
+        }
+
+        .pagination-btn:hover {
+            background-color: #ddd;
+        }
+        
+        /* 當前頁面按鈕的啟用中樣式 */
+        .pagination-btn.active {
+            background-color: #dd0000;
+            color: white;
+            border-color: #a00000;
+        }
+
+        #search-image-btn {
+            background-color: #dd0000;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #search-image-btn img {
+            height: 16px;  /* 將圖片高度從 20px 調整為 px */
+            width: auto;   /* 寬度自動調整以保持圖片比例 */
+            vertical-align: middle;
+            margin-left: 1px;
+            margin-top: 3px;
+            margin-bottom: 3.5px;
+        }
+
+        #search-image-btn:hover {
+            background-color: #a00000;
+        }
+
+        /* 新增的「返回頂部」按鈕樣式 */
+        #back-to-top {
+            position: fixed; /* 固定在視窗上 */
+            bottom: 20px;    /* 距離底部 20px */
+            right: 20px;     /* 距離右側 20px */
+            cursor: pointer; /* 顯示滑鼠手勢 */
+            z-index: 1000;   /* 確保在其他元素之上 */
+            opacity: 0;      /* 初始狀態為隱藏 */
+            transition: opacity 0.3s, visibility 0.3s; /* 平滑過渡效果 */
+            visibility: hidden; /* 初始狀態為不可見 */
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top img {
+            width: 80px;      /* 調整圖片寬度 */
+            height: auto;     /* 高度自動調整 */
+            /* 增加暈影效果 */
+            box-shadow: 0px 0px 0px rgba(0,0,0,0);
+            /* 設定動畫 */
+            animation: floatUpDown 1.5s ease-in-out infinite alternate;
+        }
+
+        /* 定義上下移動的動畫 */
+        @keyframes floatUpDown {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px); /* 向上移動 10px */
+            }
+        }
+
+        .pagination-select {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001; /* 確保選單在最上層 */
+            display: none;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .pagination-select option {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .pagination-select option:hover {
+            background-color: #f0f0f0;
+        }
+
+        footer {
+            color: #21010cd7;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to top, transparent, #9f1313f7), url("../others/124435362_p01.png");
+            background-color: #9f1313f7; /* 作為 fallback 色，以防漸層未正常顯示 */
+            background-size: cover; /* 讓圖片覆蓋整個容器 */
+            background-position: center; /* 讓圖片置中 */
+            background-repeat: no-repeat; /* 圖片不重複 */
+            background-blend-mode: multiply; /* 混合模式 */
+            text-align: center;
+            position: relative; /* 關鍵修正：讓偽元素可以相對定位 */
+            
+        }
+
+        footer a {
+            font-size: 14px;
+            color: #21010cd7; /* 使用新的超連結顏色變數 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+
+    </style>
+</head>
+
+<div id="back-to-top" title="返回頂部">
+    <img src="../others/pagetop.png" alt="返回頂部" />
+</div>
+
+<body>
+
+    <header>
+        <p><b><br></b></p>
+        <p><b><br></b></p>
+        <h1 id="main-title">鍊金術物語　<br>表情動作指令大全　</h1>
+        <p><b><br></b></p>
+        <p><b><br></b></p>
+        <i><img src="../others/4752.png" alt="i" /> </i><a href="../others/A1.png">表情動作指令用途</a><br>
+        <i><img src="../others/4752.png" alt="i" /> </i><span>本網站非官方，統整現有之表情動作指令，</span><br>
+        <span style="margin-left: 53.68px;">將隨著動作新增不定時更新</span><br>
+        <i><img src="../others/4752.png" alt="i" /> </i><span>請善用搜尋功能，以利尋找指令</span><br>
+        <i><img src="../others/4752.png" alt="i" /> </i><span style="color: #dd0000f7;">紅字</span><span>為官方未公布或尚未確認之名稱，</span><br>
+        <span style="margin-left: 53.68px;">僅為提高搜尋便利性而列上，不代表官方資訊</span><br>
+        <i><img src="../others/4752.png" alt="i" /> </i><span>若有任何問題，歡迎至<a href="https://forms.gle/mJtxFZm2aotvbMHV6">表單</a>回報</span><br>
+        <p><b><br></b></p>
+    
+    </header>
+
+    <input type="text" id="searchInput" placeholder="請輸入關鍵字搜尋...">
+    <button id="search-image-btn">
+        <img src="../others/0119.png" alt="搜尋">
+    </button>
+
+    <div class="pagination-container" id="pagination-top"></div>
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>圖示</th>
+                <th>名稱</th>
+                
+                <th>指令</th> </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><img src="\emote\000_emotion_001.png"></td>
+                <td style="color: #dd0000">坐</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sit">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+           
+            <tr>
+                <td>2</td>
+                <td><img src="\emote\000_emotion_002.png"></td>
+                <td style="color: #dd0000">舉手</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hai">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td><img src="\emote\000_emotion_003.png"></td>
+                <td style="color: #dd0000">哭泣</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/weep">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td><img src="\emote\000_emotion_004.png"></td>
+                <td style="color: #dd0000">生氣</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/angry">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>5</td>
+                <td><img src="\emote\000_emotion_005.png"></td>
+                <td style="color: #dd0000">揮手∕再見</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/byebye">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>6</td>
+                <td><img src="\emote\000_emotion_006.png"></td>
+                <td style="color: #dd0000">扭扭捏捏∕<br>害羞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mojimoji">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>7</td>
+                <td><img src="\emote\000_emotion_007.png"></td>
+                <td style="color: #dd0000">開心</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/happy">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td><img src="\emote\000_emotion_008.png"></td>
+                <td style="color: #dd0000">打招呼・低</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/salutation_l">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>10</td>
+                <td><img src="\emote\000_emotion_010.png"></td>
+                <td style="color: #dd0000">打招呼・高</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/salutation_h">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>11</td>
+                <td><img src="\emote\000_emotion_011.png"></td>
+                <td style="color: #dd0000">土下座</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dogeza">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>12</td>
+                <td><img src="\emote\000_emotion_012.png"></td>
+                <td style="color: #dd0000">轉圈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kururi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>13</td>
+                <td><img src="\emote\000_emotion_013.png"></td>
+                <td style="color: #dd0000">練腹肌∕<br>仰臥起坐</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/abs">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>14</td>
+                <td><img src="\emote\000_emotion_014.png"></td>
+                <td style="color: #dd0000">死亡∕倒下</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dead">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>15</td>
+                <td><img src="\emote\000_emotion_015.png"></td>
+                <td style="color: #dd0000">坐 2</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sit2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>16</td>
+                <td><img src="\emote\000_emotion_016.png"></td>
+                <td style="color: #dd0000">鼓舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cheer">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>17</td>
+                <td><img src="\emote\000_emotion_017.png"></td>
+                <td style="color: #dd0000">受苦</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/suffer">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>18</td>
+                <td><img src="\emote\000_emotion_018.png"></td>
+                <td>飛吻</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kiss">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>19</td>
+                <td><img src="\emote\000_emotion_019.png"></td>
+                <td>最佳姿勢</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/pose">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>20</td>
+                <td><img src="\emote\000_emotion_020.png"></td>
+                <td>不讓你過</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/stop">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>21</td>
+                <td><img src="\emote\000_emotion_021.png"></td>
+                <td>躺下</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bed">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>22</td>
+                <td><img src="\emote\000_emotion_022.png"></td>
+                <td>驚訝</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/surprise">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>23</td>
+                <td><img src="\emote\000_emotion_023.png"></td>
+                <td style="color: #dd0000">鞠躬</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bow">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>24</td>
+                <td><img src="\emote\000_emotion_024.png"></td>
+                <td style="color: #dd0000">是</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/yes">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>25</td>
+                <td><img src="\emote\000_emotion_025.png"></td>
+                <td style="color: #dd0000">不是</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/no">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>26</td>
+                <td><img src="\emote\000_emotion_026.png"></td>
+                <td style="color: #dd0000">稱讚</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/praise">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>27</td>
+                <td><img src="\emote\000_emotion_027.png"></td>
+                <td style="color: #dd0000">驚呆</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/amazed">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>28</td>
+                <td><img src="\emote\000_emotion_028.png"></td>
+                <td style="color: #dd0000">笑</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/laugh">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>29</td>
+                <td><img src="\emote\000_emotion_029.png"></td>
+                <td style="color: #dd0000">道歉</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sorry">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>30</td>
+                <td><img src="\emote\000_emotion_030.png"></td>
+                <td>參拜</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sanpai">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>31</td>
+                <td><img src="\emote\000_emotion_031.png"></td>
+                <td>撒豆子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mamemaki">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>32</td>
+                <td><img src="\emote\000_emotion_032.png"></td>
+                <td>空氣吉他</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/guitar">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>33</td>
+                <td><img src="\emote\000_emotion_033.png"></td>
+                <td>喵喵叫</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cat">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>34</td>
+                <td><img src="\emote\000_emotion_034.png"></td>
+                <td style="color: #dd0000">唱歌</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/song">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>35</td>
+                <td><img src="\emote\000_emotion_035.png"></td>
+                <td>中擊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/damage">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>36</td>
+                <td><img src="\emote\000_emotion_036.png"></td>
+                <td>射擊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shot">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>37</td>
+                <td><img src="\emote\000_emotion_037.png"></td>
+                <td>乾杯</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kanpai">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>38</td>
+                <td><img src="\emote\000_emotion_038.png"></td>
+                <td>正確</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/true">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>39</td>
+                <td><img src="\emote\000_emotion_039.png"></td>
+                <td>錯誤</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/false">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>40</td>
+                <td><img src="\emote\000_emotion_040.png"></td>
+                <td>御宅打藝</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/groove">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>41</td>
+                <td><img src="\emote\000_emotion_041.png"></td>
+                <td>健美操</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/exercise">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>42</td>
+                <td><img src="\emote\000_emotion_042.png"></td>
+                <td>求婚</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/propose">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>43</td>
+                <td><img src="\emote\000_emotion_043.png"></td>
+                <td>盂蘭盆舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>44</td>
+                <td><img src="\emote\000_emotion_044.png"></td>
+                <td>盂蘭盆舞？</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bon2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>45</td>
+                <td><img src="\emote\000_emotion_045.png"></td>
+                <td>狂化</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/berserk">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>46</td>
+                <td><img src="\emote\000_emotion_046.png"></td>
+                <td>攝影會</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/camera">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>47</td>
+                <td><img src="\emote\000_emotion_047.png"></td>
+                <td>擺pose</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/pose2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>48</td>
+                <td><img src="\emote\000_emotion_048.png"></td>
+                <td>打西瓜</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/suika">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>49</td>
+                <td><img src="\emote\000_emotion_049.png"></td>
+                <td>點燃</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/fire">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>50</td>
+                <td><img src="\emote\000_emotion_050.png"></td>
+                <td>月光</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/moon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>51</td>
+                <td><img src="\emote\000_emotion_051.png"></td>
+                <td>演武</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/arts">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>52</td>
+                <td><img src="\emote\000_emotion_052.png"></td>
+                <td>要糖</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/tot">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>53</td>
+                <td><img src="\emote\000_emotion_053.png"></td>
+                <td>魔女</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/witch">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>54</td>
+                <td><img src="\emote\000_emotion_054.png"></td>
+                <td>觸電</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shock">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>55</td>
+                <td><img src="\emote\000_emotion_055.png"></td>
+                <td>劍之誓言</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hurray">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>56</td>
+                <td><img src="\emote\000_emotion_056.png"></td>
+                <td>深深鞠躬</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bow2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>57</td>
+                <td><img src="\emote\000_emotion_057.png"></td>
+                <td>鼓掌</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/clap">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>58</td>
+                <td><img src="\emote\000_emotion_058.png"></td>
+                <td>彩色拉炮</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cracker">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>59</td>
+                <td><img src="\emote\000_emotion_059.png"></td>
+                <td>高聲笑</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/devil">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>60</td>
+                <td><img src="\emote\000_emotion_060.png"></td>
+                <td>滾滾黏</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/korokoro">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>61</td>
+                <td><img src="\emote\000_emotion_061.png"></td>
+                <td>手搖鈴</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bell">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>62</td>
+                <td><img src="\emote\000_emotion_062.png"></td>
+                <td>烤雞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/chicken">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>63</td>
+                <td><img src="\emote\000_emotion_063.png"></td>
+                <td>勝利</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/win">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>64</td>
+                <td><img src="\emote\000_emotion_064.png"></td>
+                <td>敗北</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/lose">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>65</td>
+                <td><img src="\emote\000_emotion_065.png"></td>
+                <td>裝酷</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cool">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>66</td>
+                <td><img src="\emote\000_emotion_066.png"></td>
+                <td>敲年糕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mochi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>67</td>
+                <td><img src="\emote\000_emotion_067.png"></td>
+                <td>翻年糕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mochi2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>68</td>
+                <td><img src="\emote\000_emotion_068.png"></td>
+                <td>舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mai">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>69</td>
+                <td><img src="\emote\000_emotion_069.png"></td>
+                <td>表演</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/song2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>70</td>
+                <td><img src="\emote\000_emotion_070.png"></td>
+                <td>情人節</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/choco">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>71</td>
+                <td><img src="\emote\000_emotion_071.png"></td>
+                <td>烹飪</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cooking">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>72</td>
+                <td><img src="\emote\000_emotion_072.png"></td>
+                <td>貓舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cat2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>73</td>
+                <td><img src="\emote\000_emotion_073.png"></td>
+                <td>打暈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/chop">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>74</td>
+                <td><img src="\emote\000_emotion_074.png"></td>
+                <td>泡湯</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bath">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>75</td>
+                <td><img src="\emote\000_emotion_075.png"></td>
+                <td>揉湯</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/yumomi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>76</td>
+                <td><img src="\emote\000_emotion_076.png"></td>
+                <td>特等獎</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/jackpot">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>77</td>
+                <td><img src="\emote\000_emotion_077.png"></td>
+                <td>排舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/line">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>78</td>
+                <td><img src="\emote\000_emotion_078.png"></td>
+                <td>坐下</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sitchair">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>79</td>
+                <td><img src="\emote\000_emotion_079.png"></td>
+                <td>自拍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/selfie">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>80</td>
+                <td><img src="\emote\000_emotion_080.png"></td>
+                <td>大泡沫</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bubble">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>81</td>
+                <td><img src="\emote\000_emotion_081.png"></td>
+                <td>拔刀術</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/katana">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>82</td>
+                <td><img src="\emote\000_emotion_082.png"></td>
+                <td>水槍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/water_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>83</td>
+                <td><img src="\emote\000_emotion_083.png"></td>
+                <td>魔法詠唱</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/aria">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>84</td>
+                <td><img src="\emote\000_emotion_084.png"></td>
+                <td>灑花</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/flower">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>85</td>
+                <td><img src="\emote\000_emotion_085.png"></td>
+                <td>噴香檳</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/champagne">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>86</td>
+                <td><img src="\emote\000_emotion_086.png"></td>
+                <td>炮擊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cannon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>87</td>
+                <td><img src="\emote\000_emotion_087.png"></td>
+                <td>防曬油</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/apply">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>88</td>
+                <td><img src="\emote\000_emotion_088.png"></td>
+                <td>噴射背包</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/jet">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>89</td>
+                <td><img src="\emote\000_emotion_089.png"></td>
+                <td>打信號旗</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/flag">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>90</td>
+                <td><img src="\emote\000_emotion_090.png"></td>
+                <td>古風舞蹈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kan">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>91</td>
+                <td><img src="\emote\000_emotion_091.png"></td>
+                <td>亡靈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ghost">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>92</td>
+                <td><img src="\emote\000_emotion_092.png"></td>
+                <td>深蹲</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/squat">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>93</td>
+                <td><img src="\emote\000_emotion_093.png"></td>
+                <td>健美舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/exdance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>94</td>
+                <td><img src="\emote\000_emotion_094.png"></td>
+                <td>手偶</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/puppet">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>95</td>
+                <td><img src="\emote\000_emotion_095.png"></td>
+                <td>通靈師</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shaman">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>96</td>
+                <td><img src="\emote\000_emotion_096.png"></td>
+                <td>啞鈴</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dumbbell">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>97</td>
+                <td><img src="\emote\000_emotion_097.png"></td>
+                <td>亂舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/exattack">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>98</td>
+                <td><img src="\emote\000_emotion_098.png"></td>
+                <td>擦一擦</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sweeping">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>99</td>
+                <td><img src="\emote\000_emotion_099.png"></td>
+                <td>驅邪消災</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ritual">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>100</td>
+                <td><img src="\emote\000_emotion_100.png"></td>
+                <td>草莓</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/strawberry">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>101</td>
+                <td><img src="\emote\000_emotion_101.png"></td>
+                <td>忍術</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ninja">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>102</td>
+                <td><img src="\emote\000_emotion_102.png"></td>
+                <td>打針</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/injection">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>103</td>
+                <td><img src="\emote\000_emotion_103.png"></td>
+                <td>糖果魔法</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/magi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>104</td>
+                <td><img src="\emote\000_emotion_104.png"></td>
+                <td>天使！？</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/angel">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>105</td>
+                <td><img src="\emote\000_emotion_105.png"></td>
+                <td>健美</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bodybuilder">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>106</td>
+                <td><img src="\emote\000_emotion_106.png"></td>
+                <td>基礎舞步</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/boxdance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>107</td>
+                <td><img src="\emote\000_emotion_107.png"></td>
+                <td>魔術師</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/magician">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>108</td>
+                <td><img src="\emote\000_emotion_108.png"></td>
+                <td>Go-Go Dance</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/gogodance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>109</td>
+                <td><img src="\emote\000_emotion_109.png"></td>
+                <td>品茶時間</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/teatime">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>110</td>
+                <td><img src="\emote\000_emotion_110.png"></td>
+                <td>敲鼓</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/taiko">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>111</td>
+                <td><img src="\emote\000_emotion_111.png"></td>
+                <td>石頭</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/janken1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>112</td>
+                <td><img src="\emote\000_emotion_112.png"></td>
+                <td>剪子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/janken2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>113</td>
+                <td><img src="\emote\000_emotion_113.png"></td>
+                <td>布</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/janken3">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>114</td>
+                <td><img src="\emote\000_emotion_114.png"></td>
+                <td>蛋糕時間</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/caketime">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>115</td>
+                <td><img src="\emote\000_emotion_115.png"></td>
+                <td>偶像跳舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/idle">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>116</td>
+                <td><img src="\emote\000_emotion_116.png"></td>
+                <td>靠墊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cushion">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>117</td>
+                <td><img src="\emote\000_emotion_117.png"></td>
+                <td>天譴！？</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/punish">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>118</td>
+                <td><img src="\emote\000_emotion_118.png"></td>
+                <td>氣球</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/balloon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>119</td>
+                <td><img src="\emote\000_emotion_119.png"></td>
+                <td>新年題字</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/fude">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>120</td>
+                <td><img src="\emote\000_emotion_120.png"></td>
+                <td>雪之精靈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/snow">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>121</td>
+                <td><img src="\emote\000_emotion_121.png"></td>
+                <td>壁咚</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kabe_don">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>122</td>
+                <td><img src="\emote\000_emotion_122.png"></td>
+                <td>花束</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/rose">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>123</td>
+                <td><img src="\emote\000_emotion_123.png"></td>
+                <td>炫武器</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/pose3">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>124</td>
+                <td><img src="\emote\000_emotion_124.png"></td>
+                <td>特技表演</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/acrobat">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>125</td>
+                <td><img src="\emote\000_emotion_125.png"></td>
+                <td>糖果</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/candy">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>126</td>
+                <td><img src="\emote\000_emotion_126.png"></td>
+                <td>慶典之舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ceremony">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>127</td>
+                <td><img src="\emote\000_emotion_127.png"></td>
+                <td>泣鬼神蘋果</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/redrain">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>128</td>
+                <td><img src="\emote\000_emotion_128.png"></td>
+                <td>猜謎</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mystery">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>129</td>
+                <td><img src="\emote\000_emotion_129.png"></td>
+                <td>靈感閃現</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/inspiration">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>130</td>
+                <td><img src="\emote\000_emotion_130.png"></td>
+                <td>尋寶</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/treasure">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>131</td>
+                <td><img src="\emote\000_emotion_131.png"></td>
+                <td>魔法<br>成功！？</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/magical">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>132</td>
+                <td><img src="\emote\000_emotion_132.png"></td>
+                <td>酷炫飲料！</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/drink">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>133</td>
+                <td><img src="\emote\000_emotion_133.png"></td>
+                <td>剛腕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/arts2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>134</td>
+                <td><img src="\emote\000_emotion_134.png"></td>
+                <td>裝死</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dead2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>135</td>
+                <td><img src="\emote\000_emotion_135.png"></td>
+                <td>印度風<br>舞蹈！</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bollywood">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>136</td>
+                <td><img src="\emote\000_emotion_136.png"></td>
+                <td>品嘗咖哩</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/currytime">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>137</td>
+                <td><img src="\emote\000_emotion_137.png"></td>
+                <td>游泳</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/swim">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>138</td>
+                <td><img src="\emote\000_emotion_138.png"></td>
+                <td>咆哮</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/roar">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>139</td>
+                <td><img src="\emote\000_emotion_139.png"></td>
+                <td>魅了</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/phantom">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>140</td>
+                <td><img src="\emote\000_emotion_140.png"></td>
+                <td>照亮周圍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/flashlight">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>141</td>
+                <td><img src="\emote\000_emotion_141.png"></td>
+                <td>害怕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/frightened">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>142</td>
+                <td><img src="\emote\000_emotion_142.png"></td>
+                <td>應援團</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/leader">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>143</td>
+                <td><img src="\emote\000_emotion_143.png"></td>
+                <td>畫畫</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/paint">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>144</td>
+                <td><img src="\emote\000_emotion_144.png"></td>
+                <td>操控</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/puppeteer">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>145</td>
+                <td><img src="\emote\000_emotion_145.png"></td>
+                <td>被操控</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/puppeteer1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>146</td>
+                <td><img src="\emote\000_emotion_146.png"></td>
+                <td>繞圈舞蹈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/gurudance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>147</td>
+                <td><img src="\emote\000_emotion_147.png"></td>
+                <td>無限等待</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/waiting">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>148</td>
+                <td><img src="\emote\000_emotion_148.png"></td>
+                <td>激光槍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/beamgun">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>149</td>
+                <td><img src="\emote\000_emotion_149.png"></td>
+                <td>盤旋</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/turning">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>150</td>
+                <td><img src="\emote\000_emotion_150.png"></td>
+                <td>PARAPARA舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/parapara">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>151</td>
+                <td><img src="\emote\000_emotion_151.png"></td>
+                <td>健美姿勢</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/wrestling">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>152</td>
+                <td><img src="\emote\000_emotion_152.png"></td>
+                <td>旋風</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cyclone">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>153</td>
+                <td><img src="\emote\000_emotion_153.png"></td>
+                <td>跳水式<br>飛身壓</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bodyPress">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>154</td>
+                <td><img src="\emote\000_emotion_154.png"></td>
+                <td>寶座</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/throne">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>155</td>
+                <td><img src="\emote\000_emotion_155.png"></td>
+                <td>兔子舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/rabbit">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>156</td>
+                <td><img src="\emote\000_emotion_156.png"></td>
+                <td>召喚幽靈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/summon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+
+            <tr>
+                <td>158</td>
+                <td><img src="\emote\000_emotion_158.png"></td>
+                <td>宮廷舞蹈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ballroom">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>160</td>
+                <td><img src="\emote\000_emotion_160.png"></td>
+                <td style="color: #dd0000">鍊金世界<br>守護團</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/guardians_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>161</td>
+                <td><img src="\emote\000_emotion_161.png"></td>
+                <td>喝咖啡牛奶</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/milkdrink">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>162</td>
+                <td><img src="\emote\000_emotion_162.png"></td>
+                <td>瀧行</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/waterfall">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>163</td>
+                <td><img src="\emote\000_emotion_163.png"></td>
+                <td>街頭藝人</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/juggling">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>164</td>
+                <td><img src="\emote\000_emotion_164.png"></td>
+                <td>吃包子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/manju_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>165</td>
+                <td><img src="\emote\000_emotion_165.png"></td>
+                <td>拔劍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mastersword">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>166</td>
+                <td><img src="\emote\000_emotion_166.png"></td>
+                <td>跳箱運動</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/jumpbox">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>167</td>
+                <td><img src="\emote\000_emotion_167.png"></td>
+                <td>拋捧花</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bouquettoss_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>168</td>
+                <td><img src="\emote\000_emotion_168.png"></td>
+                <td>接捧花</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bouquet_catch1_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>169</td>
+                <td><img src="\emote\000_emotion_169.png"></td>
+                <td>召喚怪物</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/slug_monster">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>170</td>
+                <td><img src="\emote\000_emotion_170.png"></td>
+                <td>蛙泳</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/breaststroke">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>171</td>
+                <td><img src="\emote\000_emotion_171.png"></td>
+                <td>空中挑美食</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/float_choose1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>172</td>
+                <td><img src="\emote\000_emotion_172.png"></td>
+                <td>查爾斯頓舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/charleston">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>173</td>
+                <td><img src="\emote\000_emotion_173.png"></td>
+                <td>使用鐳射槍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/lazergun">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>174</td>
+                <td><img src="\emote\000_emotion_174.png"></td>
+                <td>假扮幽靈</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/obake">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>175</td>
+                <td><img src="\emote\000_emotion_175.png"></td>
+                <td>僵屍跳</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/jiangshi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>176</td>
+                <td><img src="\emote\000_emotion_176.png"></td>
+                <td>發現獵物</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/prey">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>177</td>
+                <td><img src="\emote\000_emotion_177.png"></td>
+                <td>堆雪人</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/snowman">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>178</td>
+                <td><img src="\emote\000_emotion_178.png"></td>
+                <td>打雪仗</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/snowball_fight">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>179</td>
+                <td><img src="\emote\000_emotion_179.png"></td>
+                <td>擲骰子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dice1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>180</td>
+                <td><img src="\emote\000_emotion_180.png"></td>
+                <td>剪刀手</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/pose4">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>181</td>
+                <td><img src="\emote\000_emotion_181.png"></td>
+                <td>夏威夷火舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/firedance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>182</td>
+                <td><img src="\emote\000_emotion_182.png"></td>
+                <td>擊中你的心</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shoottheheart">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>183</td>
+                <td><img src="\emote\000_emotion_183.png"></td>
+                <td>隱藏在<br>木桶中</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hidebarrel">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>184</td>
+                <td><img src="\emote\000_emotion_184.png"></td>
+                <td>吃糰子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/dango_p">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>185</td>
+                <td><img src="\emote\000_emotion_185.png"></td>
+                <td>擁抱</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hug1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>186</td>
+                <td><img src="\emote\000_emotion_186.png"></td>
+                <td>被抱住</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hug2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>187</td>
+                <td><img src="\emote\000_emotion_187.png"></td>
+                <td>抱住</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hug3">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>188</td>
+                <td><img src="\emote\000_emotion_188.png"></td>
+                <td>打噴嚏</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sneeze1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>189</td>
+                <td><img src="\emote\000_emotion_189.png"></td>
+                <td>抓住繩梯</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ladder">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>190</td>
+                <td><img src="\emote\000_emotion_190.png"></td>
+                <td>拋出愛心</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/nagesen">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>191</td>
+                <td><img src="\emote\000_emotion_191.png"></td>
+                <td>撒嬌賣萌</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/begging">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>192</td>
+                <td><img src="\emote\000_emotion_192.png"></td>
+                <td>失望</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/heart_broken">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>193</td>
+                <td><img src="\emote\000_emotion_193.png"></td>
+                <td>萬歲</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/banzai">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>194</td>
+                <td><img src="\emote\000_emotion_194.png"></td>
+                <td>膝枕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hizamakura">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>195</td>
+                <td><img src="\emote\000_emotion_195.png"></td>
+                <td>膝枕而睡</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hizamakura2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>196</td>
+                <td><img src="\emote\000_emotion_196.png"></td>
+                <td>釣魚</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/fishing">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>197</td>
+                <td><img src="\emote\000_emotion_197.png"></td>
+                <td>加油聲</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/eieio">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>198</td>
+                <td><img src="\emote\000_emotion_198.png"></td>
+                <td>火箭彈<br>發射器</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/rocketlauncher">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>199</td>
+                <td><img src="\emote\000_emotion_199.png"></td>
+                <td>讀書</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/reading">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>200</td>
+                <td><img src="\emote\000_emotion_200.png"></td>
+                <td>使用望遠鏡</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/scope">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>201</td>
+                <td><img src="\emote\000_emotion_201.png"></td>
+                <td>吻臉頰<br>（同身高）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hohokiss1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>202</td>
+                <td><img src="\emote\000_emotion_202.png"></td>
+                <td>吻臉頰<br>（高身高）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hohokiss2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>203</td>
+                <td><img src="\emote\000_emotion_203.png"></td>
+                <td>吻臉頰<br>（低身高）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hohokiss3">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>204</td>
+                <td><img src="\emote\000_emotion_204.png"></td>
+                <td>滑冰</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/skate">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>205</td>
+                <td><img src="\emote\000_emotion_205.png"></td>
+                <td>打屁股挑釁</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/spanking">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>206</td>
+                <td><img src="\emote\000_emotion_206.png"></td>
+                <td>召喚花叢</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/flowergarden">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>207</td>
+                <td><img src="\emote\000_emotion_207.png"></td>
+                <td>線香煙花</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/senkouhanabi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>208</td>
+                <td><img src="\emote\000_emotion_208.png"></td>
+                <td>送禮物</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/gift1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>209</td>
+                <td><img src="\emote\000_emotion_209.png"></td>
+                <td>手持噴泉</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/susukihanabi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>210</td>
+                <td><img src="\emote\000_emotion_210.png"></td>
+                <td>等待接吻<br>（同身高）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/em_hohokiss4">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>211</td>
+                <td><img src="\emote\000_emotion_211.png"></td>
+                <td>等待接吻<br>（高身長）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/em_hohokiss5">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>212</td>
+                <td><img src="\emote\000_emotion_212.png"></td>
+                <td>等待接吻<br>（低身長）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/em_hohokiss6">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>213</td>
+                <td><img src="\emote\000_emotion_213.png"></td>
+                <td>隱身術</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/em_hidecloth1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>214</td>
+                <td><img src="\emote\000_emotion_214.png"></td>
+                <td>投球</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/pitching">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>215</td>
+                <td><img src="\emote\000_emotion_215.png"></td>
+                <td>購物</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shopping">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>216</td>
+                <td><img src="\emote\000_emotion_216.png"></td>
+                <td>喝茶</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/chair_sit_drink">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>217</td>
+                <td><img src="\emote\000_emotion_217.png"></td>
+                <td>抓物機遊戲</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/crane_game">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>218</td>
+                <td><img src="\emote\000_emotion_218.png"></td>
+                <td>為你撐傘</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shared_umbrella">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>219</td>
+                <td><img src="\emote\000_emotion_219.png"></td>
+                <td>同撐一把傘</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shared_umbrella2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>220</td>
+                <td><img src="\emote\000_emotion_220.png"></td>
+                <td>挖洞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shovel">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>221</td>
+                <td><img src="\emote\000_emotion_221.png"></td>
+                <td>打瞌睡</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/doze">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>222</td>
+                <td><img src="\emote\000_emotion_222.png"></td>
+                <td>游泳圈<br>（潑水）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ukiwa">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>223</td>
+                <td><img src="\emote\000_emotion_223.png"></td>
+                <td>游泳圈<br>（飲料）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ukiwa2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>224</td>
+                <td><img src="\emote\000_emotion_224.png"></td>
+                <td>唸書</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/study">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>225</td>
+                <td><img src="\emote\000_emotion_225.png"></td>
+                <td>手持鏡子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/fashionable">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>226</td>
+                <td><img src="\emote\000_emotion_226.png"></td>
+                <td>Naatu踢腳舞</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/natudance">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>227</td>
+                <td><img src="\emote\000_emotion_227.png"></td>
+                <td>餵餌</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/swim_feeding">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>228</td>
+                <td><img src="\emote\000_emotion_228.png"></td>
+                <td>徘徊的死者</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/zombie">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>229</td>
+                <td><img src="\emote\000_emotion_229.png"></td>
+                <td>拍立得會A</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cheki_h_right">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>230</td>
+                <td><img src="\emote\000_emotion_230.png"></td>
+                <td>拍立得會B</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cheki_h_left2">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>231</td>
+                <td><img src="\emote\000_emotion_231.png"></td>
+                <td>棒狀氣球</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/stickballoon">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>232</td>
+                <td><img src="\emote\000_emotion_232.png"></td>
+                <td>鈴鼓</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/tambourine">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>233</td>
+                <td><img src="\emote\000_emotion_233.png"></td>
+                <td>砍竹子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cut">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>234</td>
+                <td><img src="\emote\000_emotion_234.png"></td>
+                <td>陪著睡<br>（棺材）</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/co_sleeping">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>235</td>
+                <td><img src="\emote\000_emotion_235.png"></td>
+                <td>英雄姿勢</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hero_pose1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>236</td>
+                <td><img src="\emote\000_emotion_236.png"></td>
+                <td>打巴掌</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/slap1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>237</td>
+                <td><img src="\emote\000_emotion_237.png"></td>
+                <td>暖桌吃橘子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/kotatsu_mikan1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>238</td>
+                <td><img src="\emote\000_emotion_238.png"></td>
+                <td>從嘴發出<br>雷射</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/blow">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>239</td>
+                <td><img src="\emote\000_emotion_239.png"></td>
+                <td>聖誕蛋糕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/xmas_cake1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>240</td>
+                <td><img src="\emote\000_emotion_240.png"></td>
+                <td>採訪記者</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/reporter">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>241</td>
+                <td><img src="\emote\000_emotion_241.png"></td>
+                <td>扭屁股</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/shake_hip">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>242</td>
+                <td><img src="\emote\000_emotion_242.png"></td>
+                <td>抓住櫻花</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/grab_skr">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>243</td>
+                <td><img src="\emote\000_emotion_243.png"></td>
+                <td>咖啡廳閒聊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cafe_talk">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>244</td>
+                <td><img src="\emote\000_emotion_244.png"></td>
+                <td>丟帽子</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hattoss">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>245</td>
+                <td><img src="\emote\000_emotion_245.png"></td>
+                <td>盪鞦韆</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/swing">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>246</td>
+                <td><img src="\emote\000_emotion_246.png"></td>
+                <td>擺攤</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/bazaar">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>247</td>
+                <td><img src="\emote\000_emotion_247.png"></td>
+                <td>舉看板</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/panel1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>250</td>
+                <td><img src="\emote\000_emotion_250.png"></td>
+                <td>撒錢</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/scatter_money">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>251</td>
+                <td><img src="\emote\000_emotion_251.png"></td>
+                <td>衝浪</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/surfing">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>252</td>
+                <td><img src="\emote\000_emotion_252.png"></td>
+                <td>合唱</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/chorus1">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>253</td>
+                <td><img src="\emote\000_emotion_253.png"></td>
+                <td>鬥牛機</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/rodeo">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>254</td>
+                <td><img src="\emote\000_emotion_254.png"></td>
+                <td>甩毛巾</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/towel_spinner">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>255</td>
+                <td><img src="\emote\000_emotion_255.png"></td>
+                <td>揮棒下擊</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/swing_down">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>256</td>
+                <td><img src="\emote\000_emotion_256.png"></td>
+                <td>烏克麗麗</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ukulele">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>257</td>
+                <td><img src="\emote\000_emotion_257.png"></td>
+                <td>鋼琴</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/piano">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>258</td>
+                <td><img src="\emote\000_emotion_258.png"></td>
+                <td>槍戰</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/gunfight">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>259</td>
+                <td><img src="\emote\000_emotion_259.png"></td>
+                <td>躺在沙發上</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sofas_ruin_people">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>260</td>
+                <td><img src="\emote\000_emotion_260.png"></td>
+                <td>逗貓棒</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/cat_play">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>261</td>
+                <td><img src="\emote\000_emotion_261.png"></td>
+                <td>空間跳躍</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/warp">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>262</td>
+                <td><img src="\emote\000_emotion_262.png"></td>
+                <td>空中螢幕</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/aerial_display">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>263</td>
+                <td><img src="\emote\000_emotion_263.png"></td>
+                <td>拖把</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mop">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>264</td>
+                <td><img src="\emote\000_emotion_264.png"></td>
+                <td>禮物盒</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/xmas_gift">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>265</td>
+                <td><img src="\emote\000_emotion_265.png"></td>
+                <td>拉麵</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/ramen">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>266</td>
+                <td><img src="\emote\000_emotion_266.png"></td>
+                <td>BBQ</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/barbecue">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>267</td>
+                <td><img src="\emote\000_emotion_267.png"></td>
+                <td>迴轉壽司</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/sushi">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>268</td>
+                <td><img src="\emote\000_emotion_268.png"></td>
+                <td>不良少年蹲</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/punk">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>269</td>
+                <td><img src="\emote\000_emotion_269.png"></td>
+                <td>跑步機</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/room_runner">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>270</td>
+                <td><img src="\emote\000_emotion_270.png"></td>
+                <td>擬態怪</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/mimic">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>271</td>
+                <td><img src="\emote\000_emotion_271.png"></td>
+                <td>活板門</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/hatch">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>272</td>
+                <td><img src="\emote\000_emotion_272.png"></td>
+                <td>倒栽蔥</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/run_into">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>273</td>
+                <td><img src="\emote\000_emotion_273.png"></td>
+                <td>嚎啕大哭</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/crying">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>274</td>
+                <td><img src="\emote\000_emotion_274.png"></td>
+                <td>納涼</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/fan">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>275</td>
+                <td><img src="\emote\000_emotion_275.png"></td>
+                <td>仰式</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/backstroke">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+    </table>
+
+    <div class="pagination-container" id="pagination-bottom"></div>
+
+    <br><br>
+    <footer>
+        <br>
+        <h4>copyright © 2025 Incomplete Combustion.</h4>
+        <span><a href="https://forms.gle/mJtxFZm2aotvbMHV6">聯絡我</a>｜免責聲明</span><br><br>
+    </footer>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 這個腳本只負責複製功能和氣泡框顯示，不處理動態新增行/列
+        
+        function addCopyButtonListener(button) {
+            button.addEventListener('click', function() {
+                const codeInput = button.previousElementSibling;
+                const textToCopy = codeInput.value;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = '已複製！';
+                    tooltip.classList.add('tooltip-message');
+                    
+                    // 移除已存在的氣泡框，避免重複
+                    const existingTooltip = button.parentElement.querySelector('.tooltip-message');
+                    if (existingTooltip) {
+                        existingTooltip.remove();
+                    }
+                    
+                    button.parentElement.appendChild(tooltip);
+
+                    setTimeout(() => {
+                        tooltip.style.opacity = '1';
+                    }, 10);
+
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                        setTimeout(() => {
+                            tooltip.remove();
+                        }, 500);
+                    }, 1500);
+                }).catch(err => {
+                    console.error('複製失敗: ', err);
+                });
+            });
+        }
+
+        // 為所有複製按鈕添加事件監聽器
+        document.querySelectorAll('.copy-btn').forEach(addCopyButtonListener);
+    });
+
+    // ------------------- 搜尋與分頁功能 (新增功能) -------------------
+    
+    const table = document.getElementById('myTable');
+    const tableBody = table.querySelector('tbody');
+    const allRows = Array.from(tableBody.querySelectorAll('tr')); // 取得所有資料列並轉為陣列
+    const searchInput = document.getElementById('searchInput');
+    const paginationTop = document.getElementById('pagination-top');
+    const paginationBottom = document.getElementById('pagination-bottom');
+    
+    const rowsPerPage = 25; // 每頁最多顯示 50 筆
+    let currentPage = 1; // 當前頁面，預設為第一頁
+
+    /**
+     * 主功能函數：根據搜尋關鍵字和當前頁碼來更新表格的顯示內容
+     */
+    function updateTable() {
+        const filterText = searchInput.value.toLowerCase().trim();
+        // 用空格分隔多個關鍵字
+        const filterKeywords = filterText.split(' ').filter(k => k);
+
+        // 1. 篩選出符合搜尋條件的資料列
+        const filteredRows = allRows.filter(row => {
+            const nameCell = row.cells[2]; // '名稱' 是第三個儲存格 (索引為 2)
+            if (!nameCell) return false;
+            
+            const cellText = nameCell.textContent.toLowerCase();
+            // 檢查是否包含所有關鍵字
+            return filterKeywords.every(keyword => cellText.includes(keyword));
+        });
+
+        // 2. 根據篩選結果更新分頁按鈕
+        setupPagination(filteredRows.length);
+
+        // 3. 顯示對應頁面的資料
+        displayPage(filteredRows);
+    }
+
+    /**
+     * 顯示特定頁面的資料列
+     * @param {Array} rowsToShow - 經過篩選後的所有可見資料列
+     */
+    function displayPage(rowsToShow) {
+        // 先隱藏所有原始資料列
+        allRows.forEach(row => row.style.display = 'none');
+
+        // 計算當前頁面應該顯示的資料範圍
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageRows = rowsToShow.slice(startIndex, endIndex);
+        
+        // 只顯示當前頁面的資料列
+        pageRows.forEach(row => row.style.display = ''); // '' 會恢復預設的 display 樣式 (table-row)
+    }
+
+    /**
+     * 建立或更新分頁按鈕
+     * @param {number} totalRows - 篩選後的總資料筆數
+     */
+    function setupPagination(totalRows) {
+        // 清空現有的分頁按鈕
+        paginationTop.innerHTML = '';
+        paginationBottom.innerHTML = '';
+
+        if (totalRows <= rowsPerPage) return; // 如果總筆數不足一頁，則不顯示分頁
+
+        const pageCount = Math.ceil(totalRows / rowsPerPage);
+
+        // 建立按鈕的通用函數
+        function createPaginationButtons(container, shouldScroll) {
+            const fragment = document.createDocumentFragment();
+
+            // 新增 "上一頁" 按鈕
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '上一頁';
+            prevButton.className = 'pagination-btn';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                }
+            });
+            fragment.appendChild(prevButton);
+
+            // 動態生成頁碼按鈕
+            const maxVisiblePages = 5;
+            let startPage, endPage;
+
+            // 總頁數 <= 7 時，顯示所有頁碼
+            if (pageCount <= 7) {
+                startPage = 1;
+                endPage = pageCount;
+            } else {
+                // 處理左側邊界
+                if (currentPage <= 4) {
+                    startPage = 1;
+                    endPage = 5;
+                }
+                // 處理右側邊界
+                else if (currentPage > pageCount - 4) {
+                    startPage = pageCount - 4;
+                    endPage = pageCount;
+                }
+                // 處理中間區域
+                else {
+                    startPage = currentPage - 1;
+                    endPage = currentPage + 1;
+                }
+            }
+
+            // 處理左側的「...」
+            if (startPage > 1) {
+                const firstPageBtn = document.createElement('button');
+                firstPageBtn.textContent = '1';
+                firstPageBtn.className = 'pagination-btn';
+                firstPageBtn.addEventListener('click', () => {
+                    currentPage = 1;
+                    updateTable();
+                    if (shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(firstPageBtn);
+
+                if (startPage > 2) {
+                    createEllipsis(fragment, 2, startPage - 1, shouldScroll);
+                }
+            }
+            
+            // 顯示主要頁碼按鈕
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = 'pagination-btn';
+                if (i === currentPage) {
+                    btn.classList.add('active'); // 標示當前頁面
+                }
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(btn);
+            }
+
+            // 處理右側的「...」
+            if (endPage < pageCount) {
+                if (endPage < pageCount - 1) {
+                    createEllipsis(fragment, endPage + 1, pageCount - 1, shouldScroll);
+                }
+                const lastPageBtn = document.createElement('button');
+                lastPageBtn.textContent = pageCount;
+                lastPageBtn.className = 'pagination-btn';
+                lastPageBtn.addEventListener('click', () => {
+                    currentPage = pageCount;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                });
+                fragment.appendChild(lastPageBtn);
+            }
+
+            // 創建下拉選單的「...」按鈕
+            function createEllipsis(parent, start, end, shouldScroll) {
+                const ellipsisBtn = document.createElement('button');
+                ellipsisBtn.textContent = '...';
+                ellipsisBtn.className = 'pagination-btn';
+                ellipsisBtn.style.position = 'relative'; 
+                
+                const select = document.createElement('select');
+                select.style.display = 'none'; 
+                select.style.position = 'absolute';
+                select.style.bottom = '100%';
+                select.style.left = '50%';
+                select.style.transform = 'translateX(-50%)';
+                select.style.zIndex = '10';
+                select.style.width = 'auto'; 
+                select.style.minWidth = '80px'; 
+                select.style.backgroundColor = '#fff';
+                select.style.border = '1px solid #ddd';
+                select.style.borderRadius = '4px';
+                select.style.padding = '5px';
+                select.style.marginTop = '5px';
+
+
+                // 填充下拉選單選項
+                for (let i = start; i <= end; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    select.appendChild(option);
+                }
+                
+                select.addEventListener('change', (e) => {
+                    currentPage = parseInt(e.target.value);
+                    updateTable();
+                    if (shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                    select.style.display = 'none'; 
+                });
+
+                ellipsisBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 防止點擊「...」時觸發父容器的事件
+                    select.style.display = (select.style.display === 'block') ? 'none' : 'block';
+                });
+
+                // **關鍵修正：將 select 元素附加到 button 內部**
+                ellipsisBtn.appendChild(select);
+                parent.appendChild(ellipsisBtn);
+            }
+            
+            // 新增 "下一頁" 按鈕
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '下一頁';
+            nextButton.className = 'pagination-btn';
+            nextButton.disabled = currentPage === pageCount;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    updateTable();
+                    if(shouldScroll) {
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    }
+                }
+            });
+            fragment.appendChild(nextButton);
+
+            container.appendChild(fragment);
+        }
+
+        // 建立上方分頁，不滾動
+        createPaginationButtons(paginationTop, false);
+        // 建立下方分頁，點擊後滾動
+        createPaginationButtons(paginationBottom, true);
+    }
+    
+
+    // ------------------- 事件監聽與初始化 -------------------
+
+     // 新增的「返回頂部」功能
+    const backToTopBtn = document.getElementById('back-to-top');
+    const header = document.querySelector('header'); // 假設您的 header 有 id 或 class
+    
+    // 監聽視窗捲動事件
+    window.addEventListener('scroll', () => {
+        // 如果 header 元素存在，檢查其位置
+        if (header) {
+            const headerRect = header.getBoundingClientRect();
+            if (headerRect.bottom <= 0) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+    });
+
+    // 監聽按鈕點擊事件，點擊後平滑捲動回頁面頂部
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 平滑捲動
+        });
+    });
+
+    // 監聽搜尋欄位的輸入事件
+    searchInput.addEventListener('keyup', () => {
+        currentPage = 1; // 每次搜尋時都回到第一頁
+        updateTable();
+    });
+
+    // 取得新按鈕的元素
+    const searchImageButton = document.getElementById('search-image-btn');
+
+    // 監聽新按鈕的點擊事件
+    searchImageButton.addEventListener('click', () => {
+        currentPage = 1; // 每次搜尋時都回到第一頁
+        updateTable();
+    });
+
+    // 頁面初次載入時，執行一次更新來顯示第一頁
+    updateTable();
+
+</script>
+</body>
+</html>
