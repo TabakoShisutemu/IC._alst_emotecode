@@ -6,6 +6,12 @@
     <title>表情動作指令大全</title>
     <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="others/0225.png">
+    <meta property="og:title" content="鍊金術物語 表情動作指令大全">
+    <meta property="og:description" content="神奇的統整網站......為什麼要做這種東西？我怎麼會知道.jpg">
+    <meta property="og:image" content="others/gd181443_-81pre.jpg">
+    <meta property="og:url" content="https://tabakoshisutemu.github.io/IC._alst_emotecode/">
+    <meta property="og:type" content="website">
     <style>
 
         @font-face {
@@ -40,7 +46,7 @@
                 }
 
             table {
-                width: 150%; /* 讓表格寬度佔滿整個螢幕 */
+                width: 100%; /* 讓表格寬度佔滿整個螢幕 */
                 overflow-x: auto; /* 允許表格在必要時橫向捲動 */
             }
 
@@ -52,13 +58,18 @@
                 margin-top: 5px; /* 增加與上方輸入框的間距 */
             }
 
-            .input-container {
+             .input-container {
                 flex-direction: column; /* 讓輸入框和按鈕垂直排列 */
                 align-items: stretch; /* 讓項目拉伸以佔據可用空間 */
             }
-            
             .code-input {
                 width: 100%; /* 讓輸入框佔據整行 */
+            }
+            .copy-btn {
+                position: static; /* 變回靜態定位 */
+                transform: none; /* 移除位移效果 */
+                display: block; /* 讓按鈕佔據整行 */
+                margin-top: 5px; /* 增加與上方輸入框的間距 */
             }
 
             #back-to-top img {
