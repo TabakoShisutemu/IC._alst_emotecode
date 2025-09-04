@@ -78,14 +78,10 @@
             td {
                 padding: 8px 5px; /* 減少儲存格左右內邊距，為內容騰出空間 */
             }
-            /* [修改] 1. 隱藏代碼欄位並讓複製按鈕置中 */
-            .code-input {
-                display: none; /* 隱藏指令輸入框 */
-            }
+
             .input-container {
                 display: flex; /* 使用 flexbox 佈局 */
                 align-items: center;
-                justify-content: center; /* 讓容器內的剩餘項目(按鈕)置中 */
                 width: 100%;
             }
             .code-input {
@@ -459,14 +455,14 @@
 
         /* 使用偽元素在文字前後添加符號 */
         .update-spoiler > summary::before{
-            content: ' ˙༺ ˖.∗༒ ';
+            content: ' ༒˙༺ ˖.∗ ';
             color: #7c565d; /* 預設顏色與 summary 文字相同 */
             font-family: sans-serif; /* 讓符號更清晰 */
             margin: 0 5px;
         }
 
         .update-spoiler > summary::after {
-            content: ' ༒∗.˖ ༻˙ ';
+            content: ' ∗.˖ ༻˙༒ ';
             color: #7c565d; /* 預設顏色與 summary 文字相同 */
             font-family: sans-serif; /* 讓符號更清晰 */
             margin: 0 5px;
@@ -479,12 +475,12 @@
 
         /* 同時改變前後符號的顏色 */
         .update-spoiler[open] > summary::before{
-            content: ' ⚚˙༺ ˖.∗ ';
+            content: ' ⚚ ˙༺ ˖.∗ ';
             color: #21010cd7; /* 設定為網站主題紅色 */
         }
 
         .update-spoiler[open] > summary::after {
-            content: ' ∗.˖ ༻˙⚚ ';
+            content: ' ∗.˖ ༻˙ ⚚ ';
             color: #21010cd7; /* 設定為網站主題紅色 */
         }
 
