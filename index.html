@@ -78,9 +78,14 @@
             td {
                 padding: 8px 5px; /* 減少儲存格左右內邊距，為內容騰出空間 */
             }
+            /* [修改] 1. 隱藏代碼欄位並讓複製按鈕置中 */
+            .code-input {
+                display: none; /* 隱藏指令輸入框 */
+            }
             .input-container {
                 display: flex; /* 使用 flexbox 佈局 */
                 align-items: center;
+                justify-content: center; /* 讓容器內的剩餘項目(按鈕)置中 */
                 width: 100%;
             }
             .code-input {
@@ -110,7 +115,7 @@
 
         header i {
             text-align: left; /* 將文字靠左對齊 */
-            padding-left: 27px; /* 向左側增加 3% 的內間距，將文字往右推 */
+            padding-left: 25px; /* 向左側增加 3% 的內間距，將文字往右推 */
             padding-top: 70px;
         }
 
@@ -289,7 +294,7 @@
             /* 樣式已移至下方共用區 */
         }
 
-      /* [修改] 5. 新增搜尋框與按鈕的間隔 */
+        /* [修改] 5. 新增搜尋框與按鈕的間隔 */
         #searchInput {
             width: 45%; 
             padding: 10px;
@@ -308,6 +313,8 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            min-height: 38px; /* 新增最小高度，確保垂直空間足夠 */
+            box-sizing: border-box; /* 確保 padding 和 border 不會增加總高度 */
         }
         
         .pagination-select-dropdown {
@@ -440,7 +447,47 @@
             background-color: #f0f0f0;
         }
 
-              /* [修改] 7. 「更新情報」區塊樣式 */
+        /* [修改] 7. 「更新情報」區塊樣式 */
+        /* [修改] 9. 自訂 details/summary 的樣式 */
+        /* 隱藏預設的箭頭圖示 */
+        .update-spoiler > summary {
+            list-style: none; /* For Firefox */
+        }
+        .update-spoiler > summary::-webkit-details-marker {
+            display: none; /* For Chrome, Safari, Edge */
+        }
+
+        /* 使用偽元素在文字前後添加符號 */
+        .update-spoiler > summary::before{
+            content: ' ˙༺ ˖.∗༒ ';
+            color: #7c565d; /* 預設顏色與 summary 文字相同 */
+            font-family: sans-serif; /* 讓符號更清晰 */
+            margin: 0 5px;
+        }
+
+        .update-spoiler > summary::after {
+            content: ' ༒∗.˖ ༻˙ ';
+            color: #7c565d; /* 預設顏色與 summary 文字相同 */
+            font-family: sans-serif; /* 讓符號更清晰 */
+            margin: 0 5px;
+        }
+
+        /* 設定區塊展開時的文字顏色 */
+        .update-spoiler[open] > summary {
+            color: #21010cd7; /* 設定為網站主題紅色 */
+        }
+
+        /* 同時改變前後符號的顏色 */
+        .update-spoiler[open] > summary::before{
+            content: ' ⚚˙༺ ˖.∗ ';
+            color: #21010cd7; /* 設定為網站主題紅色 */
+        }
+
+        .update-spoiler[open] > summary::after {
+            content: ' ∗.˖ ༻˙⚚ ';
+            color: #21010cd7; /* 設定為網站主題紅色 */
+        }
+
         .spoiler-container {
             width: 67.67%; /* 與表格寬度一致 */
             margin: 20px auto;
@@ -455,7 +502,7 @@
 
         .update-spoiler summary {
             padding: 12px;
-            font-size: 1.1em;
+            font-size: 0.76em;
             font-weight: bold;
             cursor: pointer;
             outline: none;
@@ -471,7 +518,27 @@
         .spoiler-content {
             padding: 15px;
             text-align: left; /* 內容文字靠左 */
+            font-size: 0.76em;
             border-top: 1px solid #ddd;
+        }
+
+        /* [修改] 10. 更新情報內文縮排樣式 */
+        .spoiler-content ul {
+            list-style: none; /* 移除 ul 預設的點點 */
+            padding-left: 0;
+        }
+        .spoiler-content li {
+            display: flex; /* 使用 flexbox 佈局 */
+            align-items: flex-start; /* 頂部對齊，以防內容過長時錯位 */
+            margin-bottom: 8px; /* 增加行距 */
+        }
+        .update-date {
+            flex-shrink: 0; /* 防止日期被壓縮 */
+            margin-right: 10px; /* 日期與說明的間距 */
+            font-weight: bold;
+        }
+        .update-desc {
+            /* 此處不需要額外樣式，它會自動填滿剩餘空間並換行 */
         }
 
         footer {
@@ -3851,10 +3918,16 @@
         <details class="update-spoiler">
             <summary>更新情報</summary>
             <div class="spoiler-content">
-                <p>此處為更新日誌或情報內容。</p>
+                <p></p>
                 <ul>
-                    <li>2025-09-05: 網站樣式更新。</li>
-                    <li>更多內容...</li>
+                    <li>
+                        <span class="update-date">2025-08-24:</span>
+                        <span class="update-desc">公開頁面</span>
+                    </li>
+                    <li>
+                        <span class="update-date">2025-09-05:</span>
+                        <span class="update-desc">優化搜尋系統、改善行動端的介面、新增表情動作「墜落」</span>
+                    </li>
                 </ul>
             </div>
         </details>
