@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="others/0225.png">
     <meta property="og:title" content="鍊金術物語 表情動作指令大全">
     <meta property="og:description" content="神奇的統整網站......為什麼要做這種東西？我怎麼會知道.jpg">
-    <meta property="og:image" content="others/gd181443_-81pre.jpg">
+    <meta property="og:image" content="https://tabakoshisutemu.github.io/IC._alst_emotecode/others/gd181443_-81pre.jpg">
     <meta property="og:url" content="https://tabakoshisutemu.github.io/IC._alst_emotecode/">
     <meta property="og:type" content="website">
     <style>
@@ -23,63 +23,79 @@
 
         /* 媒體查詢：當螢幕寬度小於等於768px時生效 */
         @media (max-width: 768px) {
-            .code-table-container {
-                width: 100%; /* 表格寬度變為100% */
-                padding: 0 10px; /* 增加左右間距 */
-            }
 
-            .pagination-container {
-                    display: flex; /* 確保容器使用 Flexbox */
-                    flex-wrap: wrap; /* 允許項目換行 */
-                    justify-content: space-between; /* 讓內容在主軸上平均分佈 */
-                }
-
-                .pagination-btn {
-                    margin-bottom: 5px; /* 增加底部間距，防止換行後太擁擠 */
-                }
-
-                /* 讓「上一頁」和「下一頁」按鈕獨立成行，但不要佔滿整個寬度 */
-                .pagination-btn.prev, .pagination-btn.next {
-                    flex-basis: 45%; /* 設定按鈕的基礎寬度，讓它們在同一行顯示 */
-                    max-width: 50px; /* 設定按鈕的最大寬度，避免過寬 */
-                    margin-top: 5px;
-                }
-
-            table {
-                width: 100%; /* 讓表格寬度佔滿整個螢幕 */
-                overflow-x: auto; /* 允許表格在必要時橫向捲動 */
-            }
-
-            /* 調整複製按鈕在小螢幕上的位置，讓它盡量置中 */
-            .copy-btn {
-                position: static; /* 變回靜態定位 */
-                transform: none; /* 移除位移效果 */
-                display: block; /* 讓按鈕佔據整行 */
-                margin-top: 5px; /* 增加與上方輸入框的間距 */
-            }
-
-             .input-container {
-                flex-direction: column; /* 讓輸入框和按鈕垂直排列 */
-                align-items: stretch; /* 讓項目拉伸以佔據可用空間 */
-            }
-            .code-input {
-                width: 100%; /* 讓輸入框佔據整行 */
-            }
-            .copy-btn {
-                position: static; /* 變回靜態定位 */
-                transform: none; /* 移除位移效果 */
-                display: block; /* 讓按鈕佔據整行 */
-                margin-top: 5px; /* 增加與上方輸入框的間距 */
-            }
-
+            /* [修改] 3. 放大行動裝置的「回到頁首」按鈕 */
             #back-to-top img {
-                width: 126px;      /* 調整圖片寬度 */
+                width: 190px;      /* 將圖片寬度從 126px 放大到 150px */
                 height: auto;     /* 高度自動調整 */
                 /* 增加暈影效果 */
                 box-shadow: 0px 0px 0px rgba(0,0,0,0);
                 /* 設定動畫 */
                 animation: floatUpDown 1.5s ease-in-out infinite alternate;
             }
+
+            
+
+            .code-table-container {
+                width: 100%; /* 表格寬度變為100% */
+                padding: 0 10px; /* 增加左右間距 */
+            }
+
+            /* 請於 @media (max-width: 768px) 區塊內，替換以下樣式 */
+            .pagination-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            /* [修改] 3. 新增一個偽元素作為強制換行符 */
+            .pagination-container::before {
+                content: '';      /* 偽元素必須要有 content */
+                width: 100%;      /* 寬度 100%，佔滿整行以達到換行效果 */
+                order: 2;         /* 順序排在數字頁碼之後 */
+            }
+
+            /* 將所有數字頁碼按鈕 (包含...) 的順序設為最前 */
+            .pagination-btn {
+                order: 1;
+                margin-bottom: 5px;
+            }
+
+            /* 將「上一頁」和「下一頁」按鈕排在換行符之後 */
+            .pagination-btn.prev, .pagination-btn.next {
+                order: 3;         /* 順序排在偽元素之後 */
+                flex-basis: 48%;
+                max-width: 68px; /* 設定按鈕的最大寬度，避免過寬 */
+                margin-top: 5px;
+            }
+
+            table {
+                width: 100%; /* 讓表格寬度佔滿整個螢幕 */
+                overflow-x: auto; /* 允許表格在必要時橫向捲動 */
+            }
+
+           /* [修改] 1. 修正複製按鈕溢出問題 */
+            td {
+                padding: 8px 5px; /* 減少儲存格左右內邊距，為內容騰出空間 */
+            }
+            .input-container {
+                display: flex; /* 使用 flexbox 佈局 */
+                align-items: center;
+                width: 100%;
+            }
+            .code-input {
+                flex: 1; /* 讓輸入框自動佔滿可用空間 */
+                min-width: 0; /* 允許輸入框在空間不足時縮小 */
+                margin-right: 5px; /* 與複製按鈕間產生間距 */
+                /* 移除舊的 width: calc(...) 樣式 */
+            }
+            .copy-btn {
+                position: static; /* 取消絕對定位，回歸正常文件流 */
+                transform: none; /* 移除位移 */
+                flex-shrink: 0; /* 防止按鈕被壓縮 */
+                /* 移除舊的 relative 定位與 top/right/display/margin-top 樣式 */
+            }
+
 
         }  
 
@@ -100,7 +116,7 @@
 
         header span {
             text-align: left; /* 將文字靠左對齊 */
-            font-size: 14px;
+            font-size: 35px;
             color: #21010cd7;
             text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
                          0.9px -0.9px 0 #f6e6e1bd,
@@ -259,17 +275,56 @@
         }
 
         /* 以下為新增的樣式 */
-        /* 搜尋欄位的樣式 */
-        #searchInput {
-            width: 50%;
-            padding: 10px;
+        
+        /* [修改] 2. 新增搜尋容器與下拉選單的樣式 */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-top: 20px;
             margin-bottom: 10px;
+        }
+        #searchColumn {
+            margin-right: 5px;
+            /* 樣式已移至下方共用區 */
+        }
+
+      /* [修改] 5. 新增搜尋框與按鈕的間隔 */
+        #searchInput {
+            width: 45%; 
+            padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            margin: 0;
+            margin-right: 5px; /* 新增右邊距 */
         }
+
+        /* [修改] 4. 統一下拉選單樣式 */
+        #searchColumn, .pagination-select-dropdown {
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+        }
+        
+        .pagination-select-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: auto;
+            min-width: 80px;
+            background-color: #fff;
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
 
         /* 分頁按鈕容器的樣式 */
         .pagination-container {
@@ -385,6 +440,40 @@
             background-color: #f0f0f0;
         }
 
+              /* [修改] 7. 「更新情報」區塊樣式 */
+        .spoiler-container {
+            width: 67.67%; /* 與表格寬度一致 */
+            margin: 20px auto;
+        }
+
+        .update-spoiler {
+            border-radius: 10px; /* 與表格圓角一致 */
+            background-color: rgba(255, 255, 255, 0.6); /* 半透明白色背景 */
+            border: 1px solid #ddd; /* 參考表格邊框 */
+            overflow: hidden; /* 確保內部元素不超出圓角範圍 */
+        }
+
+        .update-spoiler summary {
+            padding: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            background-color: #ebd0d5; /* 參考表格標題顏色 */
+            color: #7c565d;
+            transition: background-color 0.3s;
+        }
+
+        .update-spoiler summary:hover {
+            background-color: #f2e0e4;
+        }
+
+        .spoiler-content {
+            padding: 15px;
+            text-align: left; /* 內容文字靠左 */
+            border-top: 1px solid #ddd;
+        }
+
         footer {
             color: #21010cd7;
             font-size: 14px;
@@ -410,6 +499,43 @@
                          0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
         }
 
+        /* [修改] 5. 新增 header 資訊列表的樣式 */
+        .info-list {
+            list-style: none; /* 移除預設的點點 */
+            padding-left: 30px; /* 列表的整體左邊距 */
+            text-align: left;
+            margin-right: 30px;
+        }
+        .info-list li {
+            position: relative; /* 設定為相對定位，以供偽元素定位 */
+            padding-left: 25px; /* 文字的左邊距，為圖示留出空間 */
+            margin-bottom: 8px; /* 每個列表項之間的間距 */
+        }
+        .info-list li::before {
+            content: ''; /* 偽元素必須有 content 屬性 */
+            display: inline-block;
+            width: 18px; /* 圖示寬度 */
+            height: 18px; /* 圖示高度 */
+            background-image: url('others/4752.png'); /* 指定圖示圖片 */
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute; /* 絕對定位，相對於 li */
+            left: 0; /* 定位到最左邊 */
+            top: 2px; /* 微調垂直位置，使其與文字對齊 */
+        }
+        /* 繼承 header span 的樣式 */
+        .info-list li, .info-list li span, .info-list li a {
+            text-align: left;
+            font-size: 14px;
+            color: #21010cd7;
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+        .info-list li a {
+            color: #dd0000f7; /* 保持超連結的特定顏色 */
+        }
 
     </style>
 </head>
@@ -426,21 +552,27 @@
         <h1 id="main-title">鍊金術物語　<br>表情動作指令大全　</h1>
         <p><b><br></b></p>
         <p><b><br></b></p>
-        <i><img src="others/4752.png" alt="i" /> </i><a href="others/A1.png">表情動作指令用途</a><br>
-        <i><img src="others/4752.png" alt="i" /> </i><span>本網站非官方，統整現有之表情動作指令，</span><br>
-        <span style="margin-left: 53.68px;">將隨著動作新增不定時更新</span><br>
-        <i><img src="others/4752.png" alt="i" /> </i><span>請善用搜尋功能，以利尋找指令</span><br>
-        <i><img src="others/4752.png" alt="i" /> </i><span style="color: #dd0000f7;">紅字</span><span>為官方未公布或尚未確認之名稱，</span><br>
-        <span style="margin-left: 53.68px;">僅為提高搜尋便利性而列上，不代表官方資訊</span><br>
-        <i><img src="others/4752.png" alt="i" /> </i><span>若有任何問題，歡迎至<a href="https://forms.gle/mJtxFZm2aotvbMHV6">表單</a>回報</span><br>
+        <ul class="info-list">
+            <li><a href="others/A1.png">表情動作指令用途</a></li>
+            <li>本網站非官方，統整現有之表情動作指令，將隨著動作新增不定時更新</li>
+            <li>請善用搜尋功能，以利尋找指令</li>
+            <li><span style="color: #dd0000f7;">紅字</span>為官方未公布或尚未確認之名稱，僅為提高搜尋便利性而列上，不代表官方資訊</li>
+            <li>若有任何問題，歡迎至<a href="https://forms.gle/mJtxFZm2aotvbMHV6">表單</a>回報</li>
+        </ul>
         <p><b><br></b></p>
     
     </header>
 
-    <input type="text" id="searchInput" placeholder="請輸入關鍵字搜尋...">
-    <button id="search-image-btn">
-        <img src="others/0119.png" alt="搜尋">
-    </button>
+<div class="search-container">
+        <select id="searchColumn">
+            <option value="2">名稱</option>
+            <option value="3">指令</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="請輸入關鍵字搜尋...">
+        <button id="search-image-btn">
+            <img src="others/0119.png" alt="搜尋">
+        </button>
+    </div>
 
     <div class="pagination-container" id="pagination-top"></div>
 
@@ -3696,10 +3828,37 @@
                 </td>
             </tr>
 
+            <tr>
+                <td>280</td>
+                <td><img src="emote/000_emotion_280.png"></td>
+                <td>墮落</td>
+                <td>
+                    <div class="input-container">
+                        <input type="text" class="code-input" value="/depravity">
+                        <button class="copy-btn">複製</button>
+                    </div>
+                </td>
+            </tr>
+
             </tbody>
     </table>
 
     <div class="pagination-container" id="pagination-bottom"></div>
+
+    <br><br>
+
+    <div class="spoiler-container">
+        <details class="update-spoiler">
+            <summary>更新情報</summary>
+            <div class="spoiler-content">
+                <p>此處為更新日誌或情報內容。</p>
+                <ul>
+                    <li>2025-09-05: 網站樣式更新。</li>
+                    <li>更多內容...</li>
+                </ul>
+            </div>
+        </details>
+    </div>
 
     <br><br>
     <footer>
@@ -3709,7 +3868,7 @@
     </footer>
 
 
-    <script>
+        <script>
     document.addEventListener('DOMContentLoaded', function() {
         // 這個腳本只負責複製功能和氣泡框顯示，不處理動態新增行/列
         
@@ -3756,6 +3915,8 @@
     const tableBody = table.querySelector('tbody');
     const allRows = Array.from(tableBody.querySelectorAll('tr')); // 取得所有資料列並轉為陣列
     const searchInput = document.getElementById('searchInput');
+    // [修改] 2. 取得新增的下拉選單元素
+    const searchColumnSelect = document.getElementById('searchColumn');
     const paginationTop = document.getElementById('pagination-top');
     const paginationBottom = document.getElementById('pagination-bottom');
     
@@ -3769,13 +3930,26 @@
         const filterText = searchInput.value.toLowerCase().trim();
         // 用空格分隔多個關鍵字
         const filterKeywords = filterText.split(' ').filter(k => k);
+        // [修改] 2. 獲取當前選擇的搜尋欄位索引
+        const searchColIndex = parseInt(searchColumnSelect.value, 10);
 
         // 1. 篩選出符合搜尋條件的資料列
         const filteredRows = allRows.filter(row => {
-            const nameCell = row.cells[2]; // '名稱' 是第三個儲存格 (索引為 2)
-            if (!nameCell) return false;
+            // [修改] 2. 根據下拉選單的值來決定要搜尋的儲存格
+            const cell = row.cells[searchColIndex]; 
+            if (!cell) return false;
             
-            const cellText = nameCell.textContent.toLowerCase();
+            let cellText = '';
+            // 如果搜尋的是「指令」欄(索引為3)，則取 input 的 value
+            if (searchColIndex === 3) {
+                const input = cell.querySelector('.code-input');
+                if(input) {
+                    cellText = input.value.toLowerCase();
+                }
+            } else { // 否則（如「名稱」欄），取儲存格的文字內容
+                cellText = cell.textContent.toLowerCase();
+            }
+            
             // 檢查是否包含所有關鍵字
             return filterKeywords.every(keyword => cellText.includes(keyword));
         });
@@ -3927,20 +4101,8 @@
                 ellipsisBtn.style.position = 'relative'; 
                 
                 const select = document.createElement('select');
-                select.style.display = 'none'; 
-                select.style.position = 'absolute';
-                select.style.bottom = '100%';
-                select.style.left = '50%';
-                select.style.transform = 'translateX(-50%)';
-                select.style.zIndex = '10';
-                select.style.width = 'auto'; 
-                select.style.minWidth = '80px'; 
-                select.style.backgroundColor = '#fff';
-                select.style.border = '1px solid #ddd';
-                select.style.borderRadius = '4px';
-                select.style.padding = '5px';
-                select.style.marginTop = '5px';
-
+                 // [修改] 4. 為下拉選單添加 class，不再使用大量行內樣式
+                select.className = 'pagination-select-dropdown';
 
                 // 填充下拉選單選項
                 for (let i = start; i <= end; i++) {
@@ -4028,6 +4190,13 @@
         currentPage = 1; // 每次搜尋時都回到第一頁
         updateTable();
     });
+    
+    // [修改] 2. 為下拉選單添加事件監聽，切換選項時也觸發搜尋
+    searchColumnSelect.addEventListener('change', () => {
+        currentPage = 1;
+        updateTable();
+    });
+
 
     // 取得新按鈕的元素
     const searchImageButton = document.getElementById('search-image-btn');
