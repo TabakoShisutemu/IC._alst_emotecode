@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日一抽開運阿魯斯</title>
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* ==================== 字體設定 ==================== */
+        @font-face {
+            font-family: 'FTT-Chiaro B';
+            /* 請確保這些字型檔案在您的資料夾中 */
+            src: url('others/FTT-Chiaro B.woff') format("woff"),
+                 url('others/FTT-Chiaro B.ttf') format("truetype"),
+                 url('others/FTT-Chiaro B.eot') format("embedded-opentype");
+        }
+
+        /* 全域字體設定，統一修正為 FTT-Chiaro B */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e6195d 0%, #c8197c 4%, #7a1557 19%, #f05387,#d460a7,#cecece), url("others/gd181443_-8.jpg"), rgba(165, 164, 164, 0.8);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-blend-mode: multiply;
+            color: #281c1c;
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif; /* 統一字體 */
+            font-size: 22px;
+            text-align: center;
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd, 0.9px -0.9px 0 #f6e6e1bd, -0.9px 0.9px 0 #f6e6e1bd, 0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-image: url("others/gd181443_-81.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            text-align: left;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: #54011dd7;
+            text-align: center;
+        }
+
+        header h1#main-title {
+            position: relative;
+            color: transparent;
+            text-shadow: none;
+            background-image: linear-gradient(to bottom right, #e76eaa 13%, #ca508d 35%, #54011dd7 85%); /* 從左上到右下的漸層 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-align: right;
+            margin-right: 5%;
+
+            filter: drop-shadow(-0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px -0.5px 0 #f6e6e1bd)
+                    drop-shadow(-0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(0.5px 0.5px 0 #f6e6e1bd)
+                    drop-shadow(1.3px 1.3px 2.4px #928181);
+        }
+
+        header h1#main-title::after {
+            content: attr(data-text); /* 使用 data-text 屬性內容 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1; /* 確保陰影在文字下方 */
+            /* 套用您提供的陰影格式 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                0.9px -0.9px 0 #f6e6e1bd,
+                -0.9px 0.9px 0 #f6e6e1bd,
+                0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        footer {
+            color: #21010cd7;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to top, transparent, #9f1313f7), url("others/124435362_p01.png");
+            background-color: #9f1313f7; /* 作為 fallback 色，以防漸層未正常顯示 */
+            background-size: cover; /* 讓圖片覆蓋整個容器 */
+            background-position: center; /* 讓圖片置中 */
+            background-repeat: no-repeat; /* 圖片不重複 */
+            background-blend-mode: multiply; /* 混合模式 */
+            text-align: center;
+            position: relative; /* 關鍵修正：讓偽元素可以相對定位 */
+            
+        }
+
+        footer a {
+            font-size: 14px;
+            color: #21010cd7; /* 使用新的超連結顏色變數 */
+            text-shadow: -0.9px -0.9px 0 #f6e6e1bd,
+                         0.9px -0.9px 0 #f6e6e1bd,
+                         -0.9px 0.9px 0 #f6e6e1bd,
+                         0.9px 0.9px 0 #f6e6e1bd, 1.5px 1.5px 2.6px #928181;
+        }
+
+        /* ==================== 抽籤頁面樣式 ==================== */
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* 通用卡片樣式 (給籤筒和結果共用) */
+        .card-style {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 2px solid #ebd0d5;
+            margin-bottom: 20px;
+            position: relative;
+            /* 修正3: 已移除斜線背景效果 (::before) */
+        }
+
+        /* --- 籤筒區域 --- */
+        #draw-section {
+            /* 修正1: 給籤筒也加上白色背景框 */
+            max-width: 400px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        /* 只有圖片可以點擊 */
+        .clickable-box {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .clickable-box:hover {
+            transform: scale(1.05);
+        }
+
+        .omikuji-box-img {
+            width: 250px;
+            height: auto;
+            /* 圖片陰影效果 */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .shake-animation {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-1deg); }
+            20%, 80% { transform: translate3d(2px, 0, 0) rotate(2deg); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-4deg); }
+            40%, 60% { transform: translate3d(4px, 0, 0) rotate(4deg); }
+        }
+
+        .instruction-text {
+            font-size: 1.2em;
+            color: #555;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+
+        .limit-text {
+            font-size: 0.9em;
+            color: #dd0000;
+            margin: 0;
+        }
+
+        /* --- 結果區域 --- */
+        #result-section {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-title {
+            font-size: 2em;
+            color: #dd0000;
+            margin: 10px 0;
+        }
+
+        /* 修正4: 結果圖片樣式調整 */
+        .result-image {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            margin: 10px 0;
+            /* 移除原本的 border */
+            border: none; 
+            border-radius: 0;
+            /* 改用 drop-shadow，讓非正方形圖片只有圖案有陰影 */
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .result-text-box {
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #555;
+            position: relative;
+            /* 修正5: 修正內文字型 */
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* 用於高亮運勢文字 (紅色) */
+        .highlight-red {
+            color: #dd0000;
+            font-weight: bold;
+        }
+
+        .notice-container {
+            margin: 15px 0;
+            /* 修正7: 將「明天再來」文字區塊樣式優化，不與上方卡片沾黏 */
+        }
+
+        .notice-text {
+            font-size: 12px;
+            color: #dd0000;
+            margin-top: 10px;
+            background-color: rgba(255,255,255,0.8);
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* --- 按鈕群組 --- */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 0; /* 上下 padding，左右由寬度控制 */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'FTT-Chiaro B', 'New Tegomin', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            
+            /* 修正6: 設定一致的寬度 */
+            width: 160px; /* 固定寬度，或是用 flex-basis */
+            flex: 0 0 auto;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-copy { background-color: #dd0000; }
+        .btn-copy:hover { background-color: #a00000; }
+
+        .btn-twitter { background-color: #1DA1F2; }
+        .btn-twitter:hover { background-color: #0c85d0; }
+
+        .btn-discord { background-color: #5865F2; }
+        .btn-discord:hover { background-color: #4752c4; }
+
+        .btn-save { background-color: #2c3e50; }
+        .btn-save:hover { background-color: #1a252f; }
+
+        /* RWD 調整 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+                text-align: center;
+                margin-right: 0;
+            }
+            .omikuji-box-img {
+                width: 200px;
+            }
+            .btn {
+                width: 45%; /* 手機版並排 */
+            }
+        }
+        @media (max-width: 400px) {
+            .btn {
+                width: 100%; /* 極小螢幕垂直排列 */
+            }
+        }
+
+       /* ==================== Header 右側資訊清單樣式 ==================== */
+        
+        /* 列表容器：定位在右側 */
+        .header-info-list {
+            position: absolute; /* 絕對定位，讓它可以疊在 Header 背景上 */
+            right: 7.3%;          /* 與標題 (h1) 的 margin-right: 5% 對齊 */
+            top: 158px;         /* 距離頂部的高度，請依您的標題高度微調 */
+            
+            list-style: none;   /* 移除預設圓點 */
+            padding: 0;
+            margin: 0;
+            
+            /* 讓列表內的項目垂直排列 */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* 讓內部文字靠左對齊 */
+            
+            z-index: 10;
+        }
+
+        /* 列表項目樣式 - 參考 index.html 的邏輯 */
+        .header-info-list li {
+            position: relative;   /* 為了讓內部的 ::before (圖片) 可以定位 */
+            font-family: 'FTT-Chiaro B', sans-serif;
+            font-size: 16px;
+            color: #54011dd7;     /* 深紅色字體 */
+            margin-bottom: 8px;   /* 行距 */
+            
+            padding-left: 25px;   /* 左側留白給圖片 Icon */
+            padding-right: 10px;  /* 右側稍微留點空間 */
+            
+        }
+        /* 使用偽元素來顯示圖片 Icon (others/4752.png) */
+        .header-info-list li::before {
+            content: '';
+            display: inline-block;
+            width: 18px;          /* 圖片寬度 */
+            height: 18px;         /* 圖片高度 */
+            
+            /* 設定圖片路徑 */
+            background-image: url('others/4752.png'); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            
+            position: absolute;   /* 絕對定位 */
+            left: 5px;            /* 靠左定位 (配合 li 的 padding-left) */
+            top: 50%;             /* 垂直置中 */
+            transform: translateY(-50%); /* 修正垂直置中的偏移 */
+        }
+
+        /* RWD 手機版調整 */
+        @media (max-width: 768px) {
+            .header-info-list {
+                position: static; /* 手機版取消絕對定位，改為流動排版 */
+                width: 100%;
+                align-items: center; /* 置中對齊 */
+                margin-top: 10px;
+                padding-bottom: 10px;
+            }
+            
+            .header-info-list li {
+                background-color: rgba(255, 255, 255, 0.8); /* 手機版背景深一點 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <p><b><br></b></p>
+        <h1 id="main-title">每日開運阿魯斯　</h1>
+        <p><b><br><br><br></b></p>
+        <p><b><br></b></p>
+        <ul class="header-info-list">
+            <li>每日領取一隻開運阿魯斯</li>
+            <li>本網頁僅供娛樂，輕鬆看待結果</li>
+        </ul>
+        </header>
+
+        <br>
+
+    <div class="main-container">
+        
+        <div id="draw-section" class="card-style">
+            
+            <div class="clickable-box" onclick="startDraw()">
+                <img src="others/kuji.png" alt="點擊籤筒" class="omikuji-box-img" id="box-image" onerror="this.src='https://via.placeholder.com/250x300/dd0000/ffffff?text=籤筒圖'">
+            </div>
+            
+            <p class="instruction-text">點擊籤筒開始抽籤</p>
+            <p class="limit-text">每天只能抽一次喔！</p>
+        </div>
+
+        <div id="result-section">
+            <div class="card-style" id="capture-area">
+                <h2 class="result-title" id="result-title">大吉</h2>
+                
+                <img src="" alt="結果圖片" class="result-image" id="result-image">
+                
+                <div class="result-text-box" id="result-text">
+                    運勢內容載入中...
+                </div>
+                
+                <div style="font-size: 12px; color: #999; margin-top: 5px;">
+                    抽籤日期: <span id="draw-date"></span>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="notice-container">
+                <p class="notice-text">明天再來試試手氣吧！</p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-copy" onclick="copyResultText()">
+                    📋 複製文字
+                </button>
+                <button class="btn btn-twitter" onclick="shareTwitter()">
+                    🐦 分享到推特
+                </button>
+                <button class="btn btn-discord" onclick="copyForDiscord()">
+                    💬 Discord格式
+                </button>
+                <button class="btn btn-save" onclick="saveScreenshot()">
+                    📸 截圖保存
+                </button>
+            </div>
+
+            <br><br>
+        </div>
+
+    </div>
+
+    <footer>
+        <br>
+        <h4>copyright © 2025-2026 Incomplete Combustion.</h4>
+        <span><a href="https://forms.gle/mJtxFZm2aotvbMHV6">聯絡我</a>｜<a href="https://tabakoshisutemu.github.io/IC._alst_emotecode/copyright">免責聲明</a></span><br><br>
+    </footer>
+
+    <script>
+        // ==================== 設定區 ====================
+        
+        // 修正2: 設定音效檔案路徑 (請放置您的音效檔)
+        const CLICK_SOUND_PATH = 'others/syakasyaka.mp3'; 
+
+        // [新增] 設定結果出現時的音效 (請修改這裡的檔案路徑)
+        const RESULT_SOUND_PATH = 'others/jyanjyan.mp3';   // <--- 新增這一行
+
+        // 設定抽籤結果與機率
+        // 修正8: 在 text 中，將運勢名稱 (如大吉) 用 <span class='highlight-red'> 包起來
+        const drawConfig = [
+            { 
+                id: 1, 
+                name: "༺ 薯吉 ༻", 
+                rate: 5, 
+                // 這裡示範如何將運勢文字變紅
+                text: "你的運勢......什麼！是<span class='highlight-red'>薯吉</span>！？<br>這種運勢我可不知道......<br>世界上真的是充滿未知啊......", 
+                image: "others/薯G.png" 
+            },
+            { 
+                id: 2, 
+                name: "༺ 大吉 ༻", 
+                rate: 15, 
+                text: "你的運勢......哇！是<span class='highlight-red'>大吉</span>！<br>看來，只要你不氣餒<br>一定能心想事成。", 
+                image: "others/大G.png" 
+            },
+            { 
+                id: 3, 
+                name: "༺ 吉 ༻", 
+                rate: 40, 
+                text: "你的運勢......是<span class='highlight-red'>吉</span>呢！<br>應該還不錯。<br>只要腳踏實地萬事都會順利。", 
+                image: "others/G.png" 
+            },
+            { 
+                id: 4, 
+                name: "༺ 小吉 ༻", 
+                rate: 30, 
+                text: "你的運勢......是<span class='highlight-red'>小吉</span>！<br>屬於不上不下的那種<br>看來不要抱太大的希望比較好。", 
+                image: "others/小G.png" 
+            },
+            { 
+                id: 5, 
+                name: "༺ 兇 ༻", 
+                rate: 10, 
+                text: "你的運勢......哎呀呀，是<span class='highlight-red'>兇</span>！<br>其實也不錯，既然能事先知道<br>就可以好好準備如何應對了。", 
+                image: "others/X.png" 
+            }
+        ];
+
+        // ==================== 程式邏輯區 ====================
+
+        const STORAGE_KEY = 'alst_daily_draw_v2'; // 更新版本號以免與舊資料衝突
+        const drawSection = document.getElementById('draw-section');
+        const resultSection = document.getElementById('result-section');
+        const boxImage = document.getElementById('box-image');
+        
+        // 預先載入音效物件
+        const drawAudio = new Audio(CLICK_SOUND_PATH);
+        drawAudio.volume = 0.5; // 音量設定 50%
+
+        // [新增] 建立結果音效物件
+        const resultAudio = new Audio(RESULT_SOUND_PATH); // <--- 新增這一行
+        resultAudio.volume = 0.5;
+
+        // 頁面載入時檢查是否抽過
+        window.addEventListener('load', () => {
+            const today = new Date().toLocaleDateString();
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+            if (savedData && savedData.date === today) {
+                // 如果今天已經抽過，直接顯示結果
+                showResultScreen(savedData.result, today);
+
+                // ▼▼▼ 請新增以下這段程式碼 ▼▼▼
+                
+                // 嘗試播放結果音效
+                // 注意：大多數瀏覽器會阻擋重新整理後的自動播放，除非使用者已與網頁互動過
+                if (typeof resultAudio !== 'undefined') {
+                    resultAudio.currentTime = 0;
+                    resultAudio.play().catch(e => {
+                        console.log("瀏覽器阻擋了自動播放 (正常現象):", e);
+                    });
+                }
+                
+                // ▲▲▲ 新增到這裡為止 ▲▲▲
+            }
+        });
+
+        function startDraw() {
+            const today = new Date().toLocaleDateString();
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            
+            if (savedData && savedData.date === today) {
+                alert("一天只能抽一次喔！");
+                showResultScreen(savedData.result, today);
+                return;
+            }
+
+            // 修正2: 播放音效
+            drawAudio.currentTime = 0; // 重置音效時間
+            drawAudio.play().catch(e => console.log("瀏覽器阻擋自動播放，需使用者互動:", e));
+
+            // 執行動畫
+            boxImage.classList.add('shake-animation');
+            
+            // 1.5秒後顯示結果
+            setTimeout(() => {
+                boxImage.classList.remove('shake-animation');
+                const result = calculateResult();
+                
+                // 儲存結果
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    date: today,
+                    result: result
+                }));
+
+                showResultScreen(result, today);
+
+                // [新增] 播放結果音效
+                resultAudio.currentTime = 0; // 重置時間，確保每次都能從頭播
+                resultAudio.play();          // <--- 新增這一行
+            }, 1500);
+        }
+
+        function calculateResult() {
+            const totalRate = drawConfig.reduce((sum, item) => sum + item.rate, 0);
+            let random = Math.random() * totalRate;
+            
+            for (const item of drawConfig) {
+                if (random < item.rate) {
+                    return item;
+                }
+                random -= item.rate;
+            }
+            return drawConfig[drawConfig.length - 1];
+        }
+
+        function showResultScreen(result, dateStr) {
+            // 隱藏籤筒，顯示結果
+            drawSection.style.display = 'none';
+            resultSection.style.display = 'block';
+
+            // 更新 DOM
+            document.getElementById('result-title').innerText = result.name;
+            
+            // 圖片路徑若失效，使用 placeholder
+            const imgEl = document.getElementById('result-image');
+            imgEl.src = result.image;
+            imgEl.onerror = function() { this.src = 'https://via.placeholder.com/300x300?text=' + result.name; };
+
+            // 使用 innerHTML 以支援 <span class='highlight-red'>
+            document.getElementById('result-text').innerHTML = result.text;
+            document.getElementById('draw-date').innerText = dateStr;
+        }
+
+        // --- 按鈕功能 ---
+
+        // 1. 複製文字 (這裡需要過濾掉 HTML 標籤以取得純文字)
+        function copyResultText() {
+            const title = document.getElementById('result-title').innerText;
+            // 取得純文字內容
+            const textContent = document.getElementById('result-text').innerText;
+            const content = `【${title}】<br>${textContent}<br>(來自: 每日一抽開運阿魯斯)`;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                alert('已複製籤文！');
+            }).catch(err => {
+                console.error('複製失敗:', err);
+            });
+        }
+
+        // 2. 分享到 Twitter
+        function shareTwitter() {
+            const title = document.getElementById('result-title').innerText;
+            const textContent = document.getElementById('result-text').innerText;
+            const shareText = encodeURIComponent(`我今天抽到了開運阿魯斯【${title}】！<br>${textContent}<br>#鍊金術物語 #開運阿魯斯`);
+            const url = `https://twitter.com/intent/tweet?text=${shareText}`;
+            window.open(url, '_blank');
+        }
+
+        // 3. 複製 Discord 格式
+        function copyForDiscord() {
+            const title = document.getElementById('result-title').innerText;
+            const textContent = document.getElementById('result-text').innerText;
+            const imgSrc = document.getElementById('result-image').src;
+            
+            const content = `**${title}**\n${textContent}\n${imgSrc}`;
+            
+            navigator.clipboard.writeText(content).then(() => {
+                alert('已複製 Discord 格式內容！\n請直接在 Discord 對話框貼上 (Ctrl+V)。');
+            });
+        }
+
+        // 4. 截圖保存
+        function saveScreenshot() {
+            const element = document.getElementById('capture-area');
+            
+            html2canvas(element, {
+                backgroundColor: null, // 保持透明 (因為卡片有圓角)
+                scale: 2 // 提高解析度
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `daily_fortune_${new Date().getTime()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
