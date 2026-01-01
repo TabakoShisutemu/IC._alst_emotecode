@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="icon" type="image/png" href="others/0225.png">
+    <meta property="og:title" content="鍊金術物語 每日一抽開運阿魯斯">
+    <meta property="og:description" content="你渴望更多的開運阿魯斯，卻苦於官方不給你嗎？那麼快來試試「每日一抽開運阿魯斯」！讓你輕鬆取得無法交易的夢幻逸品！">
+    <meta property="og:image" content="https://tabakoshisutemu.github.io/IC._alst_emotecode/others/gd181443_-81pre.jpg">
+    <meta property="og:url" content="https://tabakoshisutemu.github.io/IC._alst_emotecode/omikuji">
+    <meta property="og:type" content="website">
     
     <style>
         /* ==================== 字體設定 ==================== */
@@ -240,17 +246,33 @@
         }
 
         .notice-container {
-            margin: 15px 0;
-            /* 修正7: 將「明天再來」文字區塊樣式優化，不與上方卡片沾黏 */
+            .notice-container {
+            /* 修改：上方 margin 設為 0，只保留下方 margin */
+            margin: 0 0 15px 0;
+            width: 100%; /* 確保容器寬度與上方一致 */
+            }
         }
 
         .notice-text {
             font-size: 12px;
             color: #dd0000;
-            margin-top: 10px;
-            background-color: rgba(255,255,255,0.8);
-            padding: 5px;
-            border-radius: 5px;
+            /* --- 關鍵修改開始 --- */
+            margin-top: 0; /* 移除上方間距 */
+            
+            /* 設定背景與邊框，使其與上方的背包區塊風格統一 */
+            background-color: rgba(255,255,255,0.8); 
+            border: 1px solid #ddd; /* 加上與背包一樣的邊框顏色 */
+            border-top: none;       /* 移除上邊框，避免與背包底部邊框重疊變粗 */
+            
+            /* 圓角設定：左上右上歸零，只保留左下右下圓角 */
+            border-radius: 0 0 10px 10px; 
+            
+            /* 寬度設定：確保與上方背包寬度完全一致 */
+            width: 100%;
+            box-sizing: border-box; /* 確保 padding 不會撐大寬度 */
+            /* --- 關鍵修改結束 --- */
+
+            padding: 8px; /*稍微增加一點內距比較好看*/
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
@@ -373,16 +395,104 @@
         /* RWD 手機版調整 */
         @media (max-width: 768px) {
             .header-info-list {
-                position: static; /* 手機版取消絕對定位，改為流動排版 */
                 width: 100%;
-                align-items: center; /* 置中對齊 */
-                margin-top: 10px;
+                margin-top: 8px;
                 padding-bottom: 10px;
             }
             
             .header-info-list li {
                 background-color: rgba(255, 255, 255, 0.8); /* 手機版背景深一點 */
             }
+        }
+
+               /* ==================== 收藏室 (移植 Update Info 樣式) ==================== */
+
+        /* 收藏室容器 */
+        .collection-spoiler {
+            width: 99.7%;
+            margin: 0 auto 0 auto; /* 置中並與下方留白 */
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid #ddd;
+            overflow: hidden;
+            text-align: center;
+            /* 建議追加：為了視覺上完全密合，可以把下方的圓角去掉 */
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* 標題列 (Summary) */
+        .collection-spoiler > summary {
+            list-style: none; /* For Firefox */
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            background-color: #ebd0d5;
+            color: #7c565d;
+            transition: background-color 0.3s;
+        }
+
+        .collection-spoiler > summary::-webkit-details-marker {
+            display: none; /* For Chrome, Safari, Edge */
+        }
+
+        .collection-spoiler > summary:hover {
+            background-color: #f2e0e4;
+        }
+
+        /* 展開狀態的樣式 */
+        .collection-spoiler[open] > summary {
+            color: #21010cd7;
+        }
+
+
+        /* 內容區域 */
+        .collection-content {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 內部網格 (保留原本的邏輯) */
+        .collection-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .collection-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70px;
+        }
+
+        .collection-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            transition: all 0.3s;
+        }
+
+        .collection-item span {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #555;
+            font-family: 'FTT-Chiaro B', sans-serif;
+            white-space: nowrap;
+        }
+
+        /* 未取得狀態 */
+        .collection-item.locked img {
+            filter: brightness(0) opacity(0.2);
+        }
+        
+        .collection-item.locked span {
+            color: #ccc;
+            text-decoration: line-through;
         }
     </style>
 </head>
@@ -430,6 +540,16 @@
 
             <br>
 
+            <details class="collection-spoiler">
+                <summary>
+                    🎒 查看背包 (<span id="collection-count">0/5</span>)<hr width="100%" color="#a99696">
+                </summary>
+                <div class="collection-content">
+                    <div class="collection-grid" id="collection-grid">
+                        </div>
+                </div>
+            </details>
+
             <div class="notice-container">
                 <p class="notice-text">明天再來試試手氣吧！</p>
             </div>
@@ -448,6 +568,7 @@
                     📸 截圖保存
                 </button>
             </div>
+
 
             <br><br>
         </div>
@@ -513,6 +634,7 @@
         // ==================== 程式邏輯區 ====================
 
         const STORAGE_KEY = 'alst_daily_draw_v2'; // 更新版本號以免與舊資料衝突
+        const COLLECTION_KEY = 'alst_collection_v1';// [新增] 收藏室的專用 Key
         const drawSection = document.getElementById('draw-section');
         const resultSection = document.getElementById('result-section');
         const boxImage = document.getElementById('box-image');
@@ -529,6 +651,8 @@
         window.addEventListener('load', () => {
             const today = new Date().toLocaleDateString();
             const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+            renderCollection();
 
             if (savedData && savedData.date === today) {
                 // 如果今天已經抽過，直接顯示結果
@@ -577,6 +701,19 @@
                     result: result
                 }));
 
+                // [新增] 更新收藏進度
+                try {
+                    updateCollection(result.id);
+                } catch (e) {
+                    console.error("更新收藏失敗:", e);
+                }
+
+                // 3. 儲存今日抽籤紀錄 (這是最重要的一步，必須在顯示畫面即將成功前執行)
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    date: today,
+                    result: result
+                }));
+
                 showResultScreen(result, today);
 
                 // [新增] 播放結果音效
@@ -616,6 +753,52 @@
             document.getElementById('draw-date').innerText = dateStr;
         }
 
+        // ==================== 收藏室功能區 ====================
+
+        function updateCollection(newId) {
+            let collection = JSON.parse(localStorage.getItem(COLLECTION_KEY)) || [];
+            
+            if (!collection.includes(newId)) {
+                collection.push(newId);
+                localStorage.setItem(COLLECTION_KEY, JSON.stringify(collection));
+            }
+            
+            renderCollection();
+            
+            // 如果抽到新結果，自動打開收藏室讓使用者看到亮起來的那一刻 (可選)
+            // document.getElementById('collection-details').open = true;
+        }
+
+        function renderCollection() {
+            // 防呆：確保元素存在
+            const grid = document.getElementById('collection-grid');
+            const countSpan = document.getElementById('collection-count');
+            
+            if (!grid || !countSpan) return;
+
+            const collection = JSON.parse(localStorage.getItem(COLLECTION_KEY)) || [];
+            
+            // 更新數字
+            countSpan.innerText = `${collection.length}/${drawConfig.length}`;
+            
+            grid.innerHTML = '';
+            
+            drawConfig.forEach(item => {
+                const isUnlocked = collection.includes(item.id);
+                const div = document.createElement('div');
+                div.className = `collection-item ${isUnlocked ? '' : 'locked'}`;
+                
+                const nameText = isUnlocked ? item.name : '？？？';
+                
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/60?text=?'">
+                    <span>${nameText}</span>
+                `;
+                
+                grid.appendChild(div);
+            });
+        }
+
         // --- 按鈕功能 ---
 
         // 1. 複製文字 (這裡需要過濾掉 HTML 標籤以取得純文字)
@@ -623,7 +806,7 @@
             const title = document.getElementById('result-title').innerText;
             // 取得純文字內容
             const textContent = document.getElementById('result-text').innerText;
-            const content = `【${title}】<br>${textContent}<br>(來自: 每日一抽開運阿魯斯)`;
+            const content = `【${title}】\n${textContent}\n(來自: 每日一抽開運阿魯斯)`;
             
             navigator.clipboard.writeText(content).then(() => {
                 alert('已複製籤文！');
@@ -636,7 +819,7 @@
         function shareTwitter() {
             const title = document.getElementById('result-title').innerText;
             const textContent = document.getElementById('result-text').innerText;
-            const shareText = encodeURIComponent(`我今天抽到了開運阿魯斯【${title}】！<br>${textContent}<br>#鍊金術物語 #開運阿魯斯`);
+            const shareText = encodeURIComponent(`我今天抽到了開運阿魯斯【${title}】！\n${textContent}\n#鍊金術物語 #開運阿魯斯`);
             const url = `https://twitter.com/intent/tweet?text=${shareText}`;
             window.open(url, '_blank');
         }
@@ -647,7 +830,7 @@
             const textContent = document.getElementById('result-text').innerText;
             const imgSrc = document.getElementById('result-image').src;
             
-            const content = `**${title}**\n${textContent}\n${imgSrc}`;
+            const content = `**${title}**\n\`\`\`${textContent}\`\`\`\n${imgSrc}`;
             
             navigator.clipboard.writeText(content).then(() => {
                 alert('已複製 Discord 格式內容！\n請直接在 Discord 對話框貼上 (Ctrl+V)。');
